@@ -158,7 +158,7 @@
     align-items: center;
     overflow: hidden;
     z-index: 1;
-    padding: 6rem 0 4rem;
+    padding: 4rem 0 3rem;
     background:
       radial-gradient(ellipse at 10% 40%, rgba(255,110,180,0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 90% 20%, rgba(78,205,196,0.25) 0%, transparent 50%),
@@ -333,12 +333,13 @@
   .gb-screen-bezel::before {
     content: 'DOT-MATRIX WITH STEREO SOUND';
     position: absolute;
-    top: -1.5rem; left: 0;
+    top: -1.4rem; left: 0;
     font-family: 'Press Start 2P', monospace;
-    font-size: 0.28rem;
-    color: var(--lavender-dark);
-    letter-spacing: 0.05em;
+    font-size: 0.32rem;
+    color: #9b70d8;
+    letter-spacing: 0.08em;
     white-space: nowrap;
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.5), 0px -1px 0px rgba(0,0,0,0.2);
   }
 
   .gb-screen {
@@ -411,10 +412,16 @@
   .gb-label {
     font-family: 'Press Start 2P', monospace;
     font-size: 0.5rem;
-    color: var(--purple);
+    color: #8850b0;
     letter-spacing: 0.1em;
     text-align: center;
     margin-bottom: 0.85rem;
+    text-shadow:
+      0px 1px 0px rgba(255,255,255,0.6),
+      0px -1px 0px rgba(0,0,0,0.25),
+      1px 0px 0px rgba(255,255,255,0.3),
+      -1px 0px 0px rgba(0,0,0,0.15);
+    filter: contrast(1.1);
   }
 
   /* d-pad */
@@ -992,7 +999,7 @@
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="#top">
-      <img src="assets/assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost logo" />
+      <img src="Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost logo" />
       <span class="nav-logo-text"><span class="logo-tomi">Tomi</span><span class="logo-ux">UX</span></span>
     </a>
     <ul class="nav-links">
@@ -1025,7 +1032,7 @@
       <p class="hero-tagline reveal d3">Professionally obsessed with why things don't work.</p>
       <p class="hero-role reveal d3">UX Designer &amp; Usability Tester</p>
       <div class="hero-cta reveal d4">
-        <a href="#work" class="btn btn-primary">▶ View Work</a>
+        <a href="#work" class="btn btn-primary">▶ PRESS START</a>
         <a href="#contact" class="btn btn-secondary">Get in Touch</a>
       </div>
     </div>
@@ -1038,7 +1045,7 @@
           <div class="gb-screen-bezel">
             <div class="gb-screen">
               <div class="screen-title">TOMIUX<br/>PORTFOLIO</div>
-              <div class="screen-mascot">🐙</div>
+              <div class="screen-mascot">👻</div>
               <div class="screen-health">HP ████████ 100</div>
             </div>
           </div>
@@ -1160,7 +1167,7 @@
           <span>2026 ★★★</span>
         </div>
         <div class="about-portrait">
-          <img src="assets/assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost mascot" />
+          <img src="Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost mascot" />
         </div>
         <div class="about-stats">
           <div class="stat-row"><span class="stat-label">Name</span><span class="stat-value">Stacy Tomasi</span></div>
@@ -1204,7 +1211,7 @@
 
 <footer>
   <div class="footer-brand">
-    <img src="assets/assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX" />
+    <img src="Ghost_Logo_Tomi_UX.svg" alt="TomiUX" />
     <span>© 2026 · STACY TOMASI<br/>TOMIUX · ALL RIGHTS RESERVED</span>
   </div>
   <div class="footer-hits" title="you found it 👻" onclick="this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'" style="cursor:pointer;">SCORE: <span>∞</span></div>
