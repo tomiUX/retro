@@ -99,7 +99,7 @@
   }
   .nav-back:hover { background: var(--hot-pink); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--pixel-dark); }
 
-  /* PIXEL DIVIDER — exact from index.html */
+  /* PIXEL DIVIDER, exact from index.html */
   .pixel-divider {
     height: 12px;
     background: repeating-linear-gradient(90deg,
@@ -347,7 +347,7 @@
           <div class="level-back">
             <span class="back-label bl-pink">LOW FIDELITY</span>
             <p class="back-title">Paper Prototype</p>
-            <p class="back-body">Mapped core task flows — locking, unlocking, adding a guest — on paper. Ran usability tests to expose navigation problems before touching any digital tools.</p>
+            <p class="back-body">Mapped core task flows, locking, unlocking, and adding a guest. All on paper. Ran usability tests to expose navigation problems before touching any digital tools.</p>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
         </div>
@@ -377,7 +377,7 @@
           <div class="level-back">
             <span class="back-label bl-purple">INTERACTIVE</span>
             <p class="back-title">Figma Prototype</p>
-            <p class="back-body">Translated paper into a clickable Figma prototype applying Norman's principles — clear affordances, immediate feedback, natural mapping — to every element.</p>
+            <p class="back-body">Translated paper into a clickable Figma prototype applying Norman's principles: clear affordances, immediate feedback, and natural mapping.</p>
             <a href="https://www.figma.com/proto/bIcHQwB5AvsFfsWIMZraqB/August-App?node-id=156-9171&t=P5C8tVWp5P3L8Cg3-1&desktop-link-click-timestamp=1777000980202&desktop-ul-exp-bucket=po&starting-point-node-id=156%3A9171" target="_blank" rel="noopener" class="back-link">VIEW FIGMA PROTOTYPE ↗</a>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
@@ -394,7 +394,7 @@
             <span class="back-label bl-teal">PRODUCTION</span>
             <p class="back-title">Live App</p>
             <p class="back-body">Built a fully functional prototype in Lovable with real conditional logic, role-based permissions, and a responsive mobile layout.</p>
-            <button class="back-link" onclick="event.stopPropagation(); setTimeout(function(){ document.getElementById('prototype').scrollIntoView({behavior:'smooth'}); }, 50);" style="background:none;border:none;border-bottom:2px solid var(--purple);padding-bottom:1px;cursor:pointer;">🎮 PLAY WITH DEMO ↓</button>
+            <a href="#prototype" class="back-link" onclick="event.stopPropagation()">🎮 PLAY WITH DEMO ↓</a>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
         </div>
@@ -446,16 +446,16 @@
     <div class="problem-grid">
       <div>
         <p class="pull-quote">August Home works great for one owner. Real life has six kinds of users.</p>
-       <p class="body-text">The existing August app is built around a single homeowner. But real usage is messier. A house cleaner on Tuesdays, a dog walker at noon, an Airbnb guest at 3pm, family members, and a neighbor with emergency access all need different things. Each relationship carries a different level of trust.</p>
-<p class="body-text">This project explored how August's permission and access model could be redesigned to handle all of them intuitively, without requiring the owner to think like a system admin.</p>
+        <p class="body-text">The existing August app is built around a single homeowner. But real usage is messier, a house cleaner on Tuesdays, a dog walker at noon, an Airbnb guest at 3pm, family members, and a neighbor with emergency access. Each relationship carries a different level of trust.</p>
+        <p class="body-text">This project explored how August's permission and access model could be redesigned to handle all of them intuitively, without requiring the owner to think like a system admin.</p>
       </div>
       <div>
         <p class="sub-label">// RESEARCH INSIGHTS</p>
         <ul class="insight-list">
           <li>Users couldn't distinguish permanent access from time-limited guest access in the existing app</li>
-          <li>Paper testing showed "add guest" was buried — elevated to a primary action in the redesign</li>
+          <li>Paper testing showed "add guest" was buried. It was elevated to a primary action in the redesign.</li>
           <li>The owner vs. guest mental model needed to be established in onboarding, not discovered mid-use</li>
-          <li>Multi-step permission setup spiked cognitive load — introduced progressive disclosure</li>
+          <li>Multi-step permission setup spiked cognitive load. Progressive disclosure was introduced to fix this.</li>
           <li>Lock/unlock feedback needed to be immediate and unambiguous across all permission levels</li>
         </ul>
       </div>
@@ -474,7 +474,7 @@
     </div>
     <div class="users-grid">
       <div class="user-card">
-        <div class="user-card-header uh-teal">PLAYER 1 — ADMIN</div>
+        <div class="user-card-header uh-teal">PLAYER 1, ADMIN</div>
         <div class="user-card-body">
           <span class="user-icon">🏠</span>
           <p class="user-name">Homeowner</p>
@@ -518,7 +518,7 @@
         <div class="user-card-body">
           <span class="user-icon">🔑</span>
           <p class="user-name">Neighbor</p>
-          <p class="user-desc">Emergency-only access. An owner can grant access from anywhere in just a few taps. In an emergency, that kind of control matters.</p>
+          <p class="user-desc">Emergency-only access. Requires owner confirmation before the lock responds.</p>
         </div>
       </div>
     </div>
@@ -537,30 +537,30 @@
     <div class="decisions-grid">
       <div class="decision-card">
         <div class="decision-card-body">
-          <p class="decision-principle">NORMAN — AFFORDANCES</p>
+          <p class="decision-principle">NORMAN, AFFORDANCES</p>
           <p class="decision-title">Lock state is unmissable</p>
           <p class="decision-body">The lock/unlock button uses size, color, and icon together, never color alone. Any user at any permission level instantly knows the state of every lock they can access.</p>
         </div>
       </div>
       <div class="decision-card">
         <div class="decision-card-body">
-          <p class="decision-principle">COGNITIVE DESIGN — PROGRESSIVE DISCLOSURE</p>
+          <p class="decision-principle">COGNITIVE DESIGN, PROGRESSIVE DISCLOSURE</p>
           <p class="decision-title">Who → When → Where</p>
           <p class="decision-body">Adding a guest follows a strict order. You choose who before you configure timing before you select which locks. This reduces cognitive load and prevents accidental over-permissioning.</p>
         </div>
       </div>
       <div class="decision-card">
         <div class="decision-card-body">
-          <p class="decision-principle">NIELSEN — RECOGNITION OVER RECALL</p>
+          <p class="decision-principle">NIELSEN, RECOGNITION OVER RECALL</p>
           <p class="decision-title">Roles are pre-defined</p>
-          <p class="decision-body">Instead of building permissions from scratch, owners can save templates: Cleaner, Walker, Guest, etc. Each has visible, adjustable defaults, allowing for speedy access, not a blank slate to memorize.</p>
+          <p class="decision-body">Instead of building permissions from scratch, owners pick from named templates: Cleaner, Walker, Guest. Each has visible, adjustable defaults, not a blank slate to memorize.</p>
         </div>
       </div>
       <div class="decision-card">
         <div class="decision-card-body">
-          <p class="decision-principle">NORMAN — FEEDBACK</p>
+          <p class="decision-principle">NORMAN, FEEDBACK</p>
           <p class="decision-title">Every action confirms itself</p>
-          <p class="decision-body">Locking, inviting, revoking: every action produces immediate inline confirmation. The invite button stays disabled until all required fields are complete, preventing empty submissions.</p>
+          <p class="decision-body">Locking, inviting, and revoking each produce immediate inline confirmation. The invite button stays disabled until all required fields are complete, preventing empty submissions.</p>
         </div>
       </div>
     </div>
@@ -587,12 +587,12 @@
       </div>
       <div class="stat-cell">
         <span class="stat-num">100%</span>
-        <span class="stat-label">SCORE — ALL<br/>ASSIGNMENTS</span>
+        <span class="stat-label">SCORE, ALL<br/>ASSIGNMENTS</span>
       </div>
     </div>
     <div class="takeaway">
       <p class="takeaway-text">"AI is a powerful execution tool, not a design thinking partner. It builds quickly when given precise, informed direction, but the direction has to come from the designer."</p>
-      <p class="takeaway-attr">— Stacy Tomasi, UX 60503, Spring 2026</p>
+      <p class="takeaway-attr">, UX 60503 Final Reflection, Spring 2026</p>
     </div>
   </div>
 </div>
