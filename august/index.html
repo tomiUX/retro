@@ -292,7 +292,7 @@
     <span class="meta-tag">TOOLS: PAPER · FIGMA · LOVABLE</span>
   </div>
   <div class="hero-cta" style="margin-bottom: 3rem;">
-    <a href="#prototype" class="btn btn-primary">🎮 Play With Demo</a>
+    <a href="javascript:void(0)" onclick="document.getElementById('prototype').scrollIntoView({behavior:'smooth'})" class="btn btn-primary">🎮 Play With Demo</a>
     <a href="#process" class="btn btn-secondary">↓ See the Process</a>
   </div>
 </section>
@@ -348,6 +348,7 @@
             <span class="back-label bl-pink">LOW FIDELITY</span>
             <p class="back-title">Paper Prototype</p>
             <p class="back-body">Mapped core task flows, locking, unlocking, and adding a guest. All on paper. Ran usability tests to expose navigation problems before touching any digital tools.</p>
+            <a href="https://drive.google.com/file/d/1ovtN-9CSX-ZTS6jtjiuBHJ9pZxAiSa3v/view?usp=sharing" target="_blank" rel="noopener" class="back-link" onclick="event.stopPropagation()">VIEW PAPER PROTOTYPE ↗</a>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
         </div>
@@ -363,6 +364,7 @@
             <span class="back-label bl-yellow">PEER FEEDBACK</span>
             <p class="back-title">Iteration</p>
             <p class="back-body">Peer critique revealed the permission hierarchy wasn't obvious. Restructured the guest access flow and redesigned how different access types are communicated.</p>
+            <a href="https://drive.google.com/file/d/1VfUqFZd6RddrpV9nJWLZU695e-M9ROUU/view?usp=sharing" target="_blank" rel="noopener" class="back-link" onclick="event.stopPropagation()">VIEW ITERATION ↗</a>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
         </div>
@@ -394,7 +396,7 @@
             <span class="back-label bl-teal">PRODUCTION</span>
             <p class="back-title">Live App</p>
             <p class="back-body">Built a fully functional prototype in Lovable with real conditional logic, role-based permissions, and a responsive mobile layout.</p>
-            <button class="back-link" onclick="goToPrototype(event)" style="background:none;border:none;border-bottom:2px solid var(--purple);padding-bottom:1px;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:var(--purple);letter-spacing:0.05em;">🎮 PLAY WITH DEMO ↓</button>
+            <button class="back-link" onclick="event.stopPropagation();document.getElementById('prototype').scrollIntoView({behavior:'smooth'});" style="background:none;border:none;border-bottom:2px solid var(--purple);padding-bottom:1px;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:0.38rem;color:var(--purple);letter-spacing:0.05em;">🎮 PLAY WITH DEMO ↓</button>
             <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
           </div>
         </div>
@@ -406,7 +408,7 @@
 <div class="pixel-divider"></div>
 
 <!-- LIVE PROTOTYPE EMBED -->
-<div class="section-bg-white">
+<div class="section-bg-white" id="prototype">
   <div class="section-wrap">
     <div class="section-header">
       <span class="section-badge">★ // LIVE PROTOTYPE</span>
@@ -518,7 +520,7 @@
         <div class="user-card-body">
           <span class="user-icon">🔑</span>
           <p class="user-name">Neighbor</p>
-          <p class="user-desc">Emergency-only access. Requires owner confirmation before the lock responds.</p>
+          <p class="user-desc">An owner can grant access from anywhere in just a few taps. In an emergency, that kind of control matters.</p>
         </div>
       </div>
     </div>
@@ -592,7 +594,7 @@
     </div>
     <div class="takeaway">
       <p class="takeaway-text">"AI is a powerful execution tool, not a design thinking partner. It builds quickly when given precise, informed direction, but the direction has to come from the designer."</p>
-      <p class="takeaway-attr">, UX 60503 Final Reflection, Spring 2026</p>
+      <p class="takeaway-attr">Stacy Tomasi, UX 60503 Fundamentals of Interaction Design, Spring 2026</p>
     </div>
   </div>
 </div>
