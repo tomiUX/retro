@@ -306,41 +306,97 @@
       <span class="section-badge">01 // PROCESS</span>
       <h2 class="section-title">From sketch to <span class="accent">working product</span></h2>
     </div>
-    <div class="process-grid">
-      <div class="process-card">
-        <div class="process-card-top p-pink"></div>
-        <div class="process-card-body">
-          <div class="card-num c-pink">01</div>
-          <span class="card-badge badge-pink">LOW FIDELITY</span>
-          <p class="card-title">Paper Prototype</p>
-          <p class="card-body">Mapped core task flows — locking, unlocking, adding a guest — on paper. Ran usability tests to expose navigation problems before touching any digital tools.</p>
+    <p style="font-family:'Press Start 2P',monospace;font-size:0.45rem;color:var(--text-light);text-align:center;margin-bottom:2rem;letter-spacing:0.08em;">▶ TAP ANY LEVEL TO UNLOCK</p>
+
+    <style>
+      .level-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.25rem; }
+      .level-card { perspective: 1000px; height: 260px; cursor: pointer; }
+      .level-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); transform-style: preserve-3d; }
+      .level-card.flipped .level-card-inner { transform: rotateY(180deg); }
+      .level-front, .level-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 12px; border: 3px solid var(--pixel-dark); box-shadow: 5px 5px 0 var(--pixel-dark); overflow: hidden; display: flex; flex-direction: column; }
+      .level-back { transform: rotateY(180deg); background: var(--white); padding: 1.25rem; justify-content: flex-start; gap: 0.5rem; }
+      .level-front { align-items: center; justify-content: center; gap: 0.5rem; }
+      .lf-1 { background: linear-gradient(145deg, var(--baby-pink), var(--lavender-mid)); }
+      .lf-2 { background: linear-gradient(145deg, var(--yellow), var(--baby-pink)); }
+      .lf-3 { background: linear-gradient(145deg, var(--lavender-mid), var(--baby-blue)); }
+      .lf-4 { background: linear-gradient(145deg, var(--mint), var(--teal)); }
+      .level-num { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--pixel-dark); opacity: 0.7; }
+      .level-title { font-family: 'Lilita One', sans-serif; font-size: 1.4rem; color: var(--pixel-dark); -webkit-text-stroke: 0.5px var(--pixel-dark); text-align: center; padding: 0 1rem; line-height: 1.2; }
+      .level-tap { font-family: 'Press Start 2P', monospace; font-size: 0.38rem; color: var(--pixel-dark); opacity: 0.6; letter-spacing: 0.08em; animation: blink 1.2s step-start infinite; }
+      @keyframes blink { 0%,100% { opacity: 0.6; } 50% { opacity: 0; } }
+      .back-label { font-family: 'Press Start 2P', monospace; font-size: 0.38rem; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border: 2px solid var(--pixel-dark); display: inline-block; margin-bottom: 0.25rem; }
+      .bl-pink   { background: var(--baby-pink); color: var(--pixel-dark); }
+      .bl-yellow { background: var(--yellow);    color: var(--pixel-dark); }
+      .bl-purple { background: var(--lavender-mid); color: var(--pixel-dark); }
+      .bl-teal   { background: var(--mint);      color: var(--pixel-dark); }
+      .back-title { font-family: 'Lilita One', sans-serif; font-size: 1rem; color: var(--text); -webkit-text-stroke: 0.5px var(--pixel-dark); }
+      .back-body  { font-size: 0.8rem; line-height: 1.6; color: var(--text-light); font-weight: 600; flex: 1; }
+      .back-link  { font-family: 'Press Start 2P', monospace; font-size: 0.38rem; color: var(--purple); text-decoration: none; letter-spacing: 0.05em; border-bottom: 2px solid var(--purple); padding-bottom: 1px; align-self: flex-start; }
+      .back-link:hover { color: var(--hot-pink); border-color: var(--hot-pink); }
+      .back-flip  { font-family: 'Press Start 2P', monospace; font-size: 0.35rem; color: var(--text-light); letter-spacing: 0.05em; align-self: flex-end; cursor: pointer; opacity: 0.6; }
+    </style>
+
+    <div class="level-grid">
+      <div class="level-card" onclick="this.classList.toggle('flipped')">
+        <div class="level-card-inner">
+          <div class="level-front lf-1">
+            <span class="level-num">LEVEL 1</span>
+            <span class="level-title">Paper Prototype</span>
+            <span class="level-tap">▶ TAP TO UNLOCK</span>
+          </div>
+          <div class="level-back">
+            <span class="back-label bl-pink">LOW FIDELITY</span>
+            <p class="back-title">Paper Prototype</p>
+            <p class="back-body">Mapped core task flows — locking, unlocking, adding a guest — on paper. Ran usability tests to expose navigation problems before touching any digital tools.</p>
+            <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
+          </div>
         </div>
       </div>
-      <div class="process-card">
-        <div class="process-card-top p-yellow"></div>
-        <div class="process-card-body">
-          <div class="card-num c-yellow">02</div>
-          <span class="card-badge badge-yellow">PEER FEEDBACK</span>
-          <p class="card-title">Iteration</p>
-          <p class="card-body">Peer critique revealed the permission hierarchy wasn't obvious. Restructured the guest access flow and redesigned how different access types are communicated.</p>
+      <div class="level-card" onclick="this.classList.toggle('flipped')">
+        <div class="level-card-inner">
+          <div class="level-front lf-2">
+            <span class="level-num">LEVEL 2</span>
+            <span class="level-title">Iteration</span>
+            <span class="level-tap">▶ TAP TO UNLOCK</span>
+          </div>
+          <div class="level-back">
+            <span class="back-label bl-yellow">PEER FEEDBACK</span>
+            <p class="back-title">Iteration</p>
+            <p class="back-body">Peer critique revealed the permission hierarchy wasn't obvious. Restructured the guest access flow and redesigned how different access types are communicated.</p>
+            <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
+          </div>
         </div>
       </div>
-      <div class="process-card">
-        <div class="process-card-top p-purple"></div>
-        <div class="process-card-body">
-          <div class="card-num c-purple">03</div>
-          <span class="card-badge badge-purple">INTERACTIVE</span>
-          <p class="card-title">Figma Prototype</p>
-          <p class="card-body">Translated paper into a clickable Figma prototype applying Norman's principles — clear affordances, immediate feedback, natural mapping — to every element.</p>
+      <div class="level-card" onclick="this.classList.toggle('flipped')">
+        <div class="level-card-inner">
+          <div class="level-front lf-3">
+            <span class="level-num">LEVEL 3</span>
+            <span class="level-title">Figma Prototype</span>
+            <span class="level-tap">▶ TAP TO UNLOCK</span>
+          </div>
+          <div class="level-back">
+            <span class="back-label bl-purple">INTERACTIVE</span>
+            <p class="back-title">Figma Prototype</p>
+            <p class="back-body">Translated paper into a clickable Figma prototype applying Norman's principles — clear affordances, immediate feedback, natural mapping — to every element.</p>
+            <a href="YOUR_FIGMA_LINK_HERE" target="_blank" rel="noopener" class="back-link">VIEW FIGMA PROTOTYPE ↗</a>
+            <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
+          </div>
         </div>
       </div>
-      <div class="process-card">
-        <div class="process-card-top p-teal"></div>
-        <div class="process-card-body">
-          <div class="card-num c-teal">04</div>
-          <span class="card-badge badge-teal">PRODUCTION</span>
-          <p class="card-title">Live App</p>
-          <p class="card-body">Built a fully functional prototype in Lovable with real conditional logic, role-based permissions, and a responsive mobile layout.</p>
+      <div class="level-card" onclick="this.classList.toggle('flipped')">
+        <div class="level-card-inner">
+          <div class="level-front lf-4">
+            <span class="level-num">⚔️ BOSS LEVEL</span>
+            <span class="level-title">Live App</span>
+            <span class="level-tap">▶ TAP TO UNLOCK</span>
+          </div>
+          <div class="level-back">
+            <span class="back-label bl-teal">PRODUCTION</span>
+            <p class="back-title">Live App</p>
+            <p class="back-body">Built a fully functional prototype in Lovable with real conditional logic, role-based permissions, and a responsive mobile layout.</p>
+            <a href="#prototype" class="back-link" onclick="event.stopPropagation()">🎮 PLAY WITH DEMO ↓</a>
+            <span class="back-flip" onclick="event.stopPropagation();this.closest('.level-card').classList.remove('flipped')">↩ FLIP BACK</span>
+          </div>
         </div>
       </div>
     </div>
