@@ -6,7 +6,7 @@
 <title>Stacy Tomasi // TomiUX 🎮</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&family=Lilita+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --lavender-bg: #f0e8ff;
@@ -28,9 +28,28 @@
     --offwhite: #fdf8ff;
     --text: #1a0a3e;
     --text-mid: #4a1878;
-    --text-light: #8850b0;
+    --text-light: #6a3090;
     --pixel-dark: #0a0520;
   }
+
+  /* ===== SKIP LINK (WCAG 2.4.1) ===== */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--purple);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 3px solid var(--pixel-dark);
+    box-shadow: 3px 3px 0 var(--pixel-dark);
+    z-index: 9999;
+    border-radius: 0 0 8px 8px;
+  }
+  .skip-link:focus { top: 0; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -42,7 +61,6 @@
     overflow-x: hidden;
   }
 
-  /* ===== TILED 90s PATTERN BG ===== */
   body::before {
     content: '';
     position: fixed;
@@ -68,107 +86,108 @@
       radial-gradient(3px 3px at 68% 92%, var(--pink), transparent),
       radial-gradient(2px 2px at 85% 82%, var(--yellow), transparent);
     background-size: 300px 300px;
-    animation: bgShimmer 8s ease-in-out infinite alternate;
+  }
+
+  /* WCAG 2.3.3 — animations only run when user has no motion preference */
+  @media (prefers-reduced-motion: no-preference) {
+    body::before { animation: bgShimmer 8s ease-in-out infinite alternate; }
+    .pixel-deco { animation: floatPx 4s ease-in-out infinite; }
+    .gb-led { animation: ledBlink 2s ease-in-out infinite; }
+    .signal-dot { animation: pulse 1.4s ease-in-out infinite; }
+    .screen-mascot img { animation: screenBob 2s ease-in-out infinite; }
+    .reveal { animation: up 0.7s ease forwards; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; }
   }
 
   @keyframes bgShimmer { 0% { opacity: 0.08; } 100% { opacity: 0.18; } }
+  @keyframes floatPx { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
+  @keyframes ledBlink { 0%, 100% { opacity: 1; } 85% { opacity: 1; } 90% { opacity: 0.3; } 95% { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes screenBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes up { to { opacity: 1; transform: translateY(0); } }
 
   /* ===== NAV ===== */
   nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: sticky; top: 0; z-index: 100;
     background: rgba(253,248,255,0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom: 4px solid var(--pixel-dark);
     box-shadow: 0 4px 0 var(--lavender-dark);
   }
 
   .nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0.75rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto; padding: 0.75rem 2rem;
   }
 
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-  }
-
-  .nav-logo img {
-    height: 40px;
-    width: 40px;
-    filter: drop-shadow(2px 2px 0 var(--purple));
-    image-rendering: pixelated;
-  }
-
-  .nav-logo-text {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 1rem;
-    line-height: 1;
-  }
-  .logo-tomi { color: #A122C0; text-shadow: 2px 2px 0 rgba(115,23,136,0.3); }
-  .logo-ux { color: #3FBB9E; text-shadow: 2px 2px 0 rgba(63,187,158,0.3); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .nav-logo img { height: 40px; width: 40px; filter: drop-shadow(2px 2px 0 var(--purple)); image-rendering: pixelated; }
+  .nav-logo-text { font-family: 'Press Start 2P', monospace; font-size: 1rem; line-height: 1; }
+  .logo-tomi { color: #A122C0; }
+  .logo-ux { color: #3FBB9E; }
 
   .nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
 
   .nav-links a {
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-mid);
-    text-decoration: none;
-    padding: 0.45rem 0.9rem;
-    border-radius: 6px;
-    transition: all 0.15s;
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-mid); text-decoration: none;
+    padding: 0.45rem 0.9rem; border-radius: 6px; transition: all 0.15s;
   }
+  .nav-links a:hover { background: var(--lavender-mid); color: var(--purple); }
+  .nav-links a:focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; background: var(--lavender-mid); color: var(--purple); }
 
-  .nav-links a:hover {
-    background: var(--lavender-mid);
-    color: var(--purple);
-  }
-
-  /* ===== FEATURED DROPDOWN ===== */
+  /* Dropdown trigger — <button> for keyboard access (WCAG 2.1.1) */
   .nav-dropdown { position: relative; }
-  .nav-dropdown > a::after { content: ' ▾'; font-size: 0.6rem; opacity: 0.7; }
-  .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: rgba(253,248,255,0.98); border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark); border-radius: 8px; min-width: 200px; z-index: 200; overflow: hidden; }
-  .nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu { display: block; }
-  .dropdown-menu a { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem !important; border-radius: 0 !important; border-bottom: 2px solid var(--lavender-mid); font-size: 0.75rem !important; color: var(--text-mid) !important; white-space: nowrap; }
+  .nav-dropdown-btn {
+    font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-mid); background: none; border: none;
+    padding: 0.45rem 0.9rem; border-radius: 6px;
+    cursor: pointer; display: flex; align-items: center; gap: 0.3rem; transition: all 0.15s;
+  }
+  .nav-dropdown-btn::after { content: '▾'; font-size: 0.6rem; opacity: 0.7; }
+  .nav-dropdown-btn:hover { background: var(--lavender-mid); color: var(--purple); }
+  .nav-dropdown-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; background: var(--lavender-mid); color: var(--purple); }
+
+  .dropdown-menu {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    background: rgba(253,248,255,0.98); border: 3px solid var(--pixel-dark);
+    box-shadow: 4px 4px 0 var(--pixel-dark); border-radius: 8px;
+    min-width: 200px; z-index: 200; overflow: hidden;
+  }
+  .dropdown-menu.open { display: block; }
+  .nav-dropdown:hover .dropdown-menu { display: block; }
+
+  .dropdown-menu a {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1rem; border-bottom: 2px solid var(--lavender-mid);
+    font-size: 0.78rem; color: var(--text-mid); text-decoration: none; white-space: nowrap;
+  }
   .dropdown-menu a:last-child { border-bottom: none; }
-  .dropdown-menu a:hover { background: var(--lavender-mid) !important; color: var(--purple) !important; }
-  .dropdown-tag { font-family: 'Press Start 2P', monospace; font-size: 0.35rem; padding: 0.15rem 0.4rem; border: 1.5px solid var(--pixel-dark); color: var(--pixel-dark); letter-spacing: 0.05em; }
+  .dropdown-menu a:hover { background: var(--lavender-mid); color: var(--purple); }
+  .dropdown-menu a:focus-visible { outline: 3px solid var(--purple); outline-offset: -3px; background: var(--lavender-mid); color: var(--purple); }
+
+  .dropdown-tag {
+    font-family: 'Press Start 2P', monospace; font-size: 0.45rem;
+    padding: 0.15rem 0.4rem; border: 1.5px solid var(--pixel-dark);
+    color: var(--pixel-dark); letter-spacing: 0.05em;
+  }
 
   .nav-cv {
-    background: #A122C0 !important;
-    color: white !important;
-    border: 3px solid var(--pixel-dark) !important;
-    box-shadow: 3px 3px 0 var(--pixel-dark) !important;
+    background: #A122C0 !important; color: white !important;
+    border: 3px solid var(--pixel-dark) !important; box-shadow: 3px 3px 0 var(--pixel-dark) !important;
     border-radius: 6px !important;
   }
-
-  .nav-cv:hover {
-    transform: translate(-1px, -1px) !important;
-    box-shadow: 4px 4px 0 var(--pixel-dark) !important;
-    background: var(--hot-pink) !important;
-  }
+  .nav-cv:hover { transform: translate(-1px,-1px) !important; box-shadow: 4px 4px 0 var(--pixel-dark) !important; background: var(--hot-pink) !important; }
+  .nav-cv:focus-visible { outline: 3px solid var(--yellow) !important; outline-offset: 3px !important; }
 
   /* ===== HERO ===== */
   .hero {
-    position: relative;
-    min-height: auto;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    z-index: 1;
-    padding: 2rem 0 2rem;
+    position: relative; min-height: auto; display: flex; align-items: center;
+    overflow: hidden; z-index: 1; padding: 2rem 0 2rem;
     background:
       radial-gradient(ellipse at 10% 40%, rgba(255,110,180,0.25) 0%, transparent 50%),
       radial-gradient(ellipse at 90% 20%, rgba(78,205,196,0.25) 0%, transparent 50%),
@@ -176,830 +195,201 @@
       var(--lavender-bg);
   }
 
-  /* floating pixel icons */
   .pixel-deco {
-    position: absolute;
-    pointer-events: none;
-    z-index: 0;
-    font-size: 1.8rem;
-    animation: floatPx 4s ease-in-out infinite;
-    opacity: 0.6;
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
-  }
-
-  @keyframes floatPx {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(8deg); }
+    position: absolute; pointer-events: none; z-index: 0;
+    font-size: 1.8rem; opacity: 0.6; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
   }
 
   .hero-layout {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    width: 100%;
-    min-height: calc(100vh - 130px);
+    position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
+    padding: 0 2rem; display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; width: 100%; min-height: calc(100vh - 130px);
   }
 
-  /* ===== HERO TEXT ===== */
   .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    background: var(--yellow);
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 3px 3px 0 var(--pixel-dark);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    color: var(--pixel-dark);
-    letter-spacing: 0.08em;
-    margin-bottom: 1.5rem;
-    display: inline-block;
+    display: inline-block; padding: 0.4rem 1rem; background: var(--yellow);
+    border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark);
+    font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
+    color: var(--pixel-dark); letter-spacing: 0.08em; margin-bottom: 1.5rem;
   }
 
   .hero-name {
-    font-family: 'Lilita One', sans-serif;
-    font-size: clamp(3.5rem, 9vw, 6.5rem);
-    line-height: 0.88;
-    margin-bottom: 1rem;
-    letter-spacing: 0.01em;
+    font-family: 'Unbounded', sans-serif; font-weight: 900;
+    font-size: clamp(3rem, 7.5vw, 5.5rem); line-height: 0.95;
+    margin-bottom: 1rem; letter-spacing: -0.02em;
   }
+  .hero-name .line1 { display: block; color: var(--purple); text-shadow: 4px 4px 0 rgba(161,34,192,0.3), 8px 8px 0 rgba(161,34,192,0.15); }
+  .hero-name .line2 { display: block; color: var(--teal); text-shadow: 4px 4px 0 rgba(63,187,158,0.3), 8px 8px 0 rgba(63,187,158,0.15); }
 
-  .hero-name .line1 {
-    display: block;
-    color: var(--purple);
-    text-shadow: 4px 4px 0 rgba(161,34,192,0.3), 8px 8px 0 rgba(161,34,192,0.15);
-    -webkit-text-stroke: 2px var(--pixel-dark);
-  }
-
-  .hero-name .line2 {
-    display: block;
-    color: var(--teal);
-    text-shadow: 4px 4px 0 rgba(63,187,158,0.3), 8px 8px 0 rgba(63,187,158,0.15);
-    -webkit-text-stroke: 2px var(--pixel-dark);
-  }
-
-  .hero-tagline {
-    font-size: 1rem;
-    color: var(--text-mid);
-    line-height: 1.6;
-    margin-bottom: 0.35rem;
-    font-weight: 700;
-  }
-
-  .hero-role {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.55rem;
-    color: var(--hot-pink);
-    letter-spacing: 0.08em;
-    margin-bottom: 2rem;
-    line-height: 1.8;
-  }
-
+  .hero-tagline { font-size: 1rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 0.35rem; font-weight: 700; }
+  .hero-role { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--hot-pink); letter-spacing: 0.08em; margin-bottom: 2rem; line-height: 1.8; }
   .hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; }
 
   .btn {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.85rem 1.75rem;
-    border-radius: 8px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.12s;
-    cursor: pointer;
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 4px 4px 0 var(--pixel-dark);
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.85rem 1.75rem; border-radius: 8px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.12s;
+    cursor: pointer; border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
   }
-
   .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
   .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--pixel-dark); }
-
+  .btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
   .btn-primary { background: #A122C0; color: white; }
   .btn-primary:hover { background: var(--hot-pink); }
   .btn-secondary { background: var(--white); color: var(--purple); }
   .btn-secondary:hover { background: var(--lavender-mid); }
 
-  /* ===== HERO ART — Game Boy ===== */
-  .hero-art {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .gameboy-wrap {
-    position: relative;
-    width: 360px;
-  }
-
-  /* stickers floating around */
-  .gb-sticker {
-    position: absolute;
-    font-size: 0.65rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    padding: 0.3rem 0.65rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border: 2.5px solid var(--pixel-dark);
-    box-shadow: 2px 2px 0 var(--pixel-dark);
-    z-index: 10;
-  }
-
+  /* ===== GAME BOY ===== */
+  .hero-art { display: flex; align-items: center; justify-content: center; position: relative; }
+  .gameboy-wrap { position: relative; width: 360px; }
+  .gb-sticker { position: absolute; font-size: 0.65rem; font-family: 'Nunito', sans-serif; font-weight: 900; padding: 0.3rem 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; border: 2.5px solid var(--pixel-dark); box-shadow: 2px 2px 0 var(--pixel-dark); z-index: 10; }
   .gb-sticker-1 { top: -1.5rem; right: -1rem; background: var(--yellow); color: var(--pixel-dark); transform: rotate(8deg); }
   .gb-sticker-2 { bottom: 2rem; left: -2rem; background: var(--pink); color: white; transform: rotate(-6deg); }
   .gb-sticker-3 { top: 3rem; left: -2.5rem; background: var(--teal); color: var(--pixel-dark); transform: rotate(-3deg); font-size: 0.6rem; }
   .gb-sticker-4 { bottom: -1rem; right: -1.5rem; background: var(--lime); color: var(--pixel-dark); transform: rotate(5deg); font-size: 0.58rem; }
-
-  /* Game Boy body */
-  .gameboy {
-    background: linear-gradient(160deg, #e8d5f5 0%, #d4b8f0 40%, #c4a0e8 100%);
-    border: 4px solid var(--pixel-dark);
-    border-radius: 12px 12px 40px 12px;
-    padding: 1.25rem 1.25rem 2rem;
-    box-shadow: 6px 6px 0 var(--pixel-dark), 0 20px 50px rgba(155,89,255,0.25);
-    position: relative;
-  }
-
-  /* screen bezel */
-  .gb-screen-bezel {
-    background: var(--pixel-dark);
-    border-radius: 8px 8px 20px 8px;
-    padding: 0.85rem;
-    margin-bottom: 1rem;
-    position: relative;
-  }
-
-  .gb-screen-bezel::before {
-    content: 'DOT-MATRIX WITH STEREO SOUND';
-    position: absolute;
-    top: -2rem; left: 0;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.3rem;
-    color: #9b70d8;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-    text-shadow: 0px 1px 0px rgba(255,255,255,0.5), 0px -1px 0px rgba(0,0,0,0.2);
-  }
-
-  .gb-screen {
-    background: #91EBD3;
-    border: 2px solid #1a1a1a;
-    border-radius: 4px;
-    aspect-ratio: 10/9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.25rem;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* scanlines on screen */
-  .gb-screen::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 3px);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .screen-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.7rem;
-    color: #0a2820;
-    letter-spacing: 0.05em;
-    line-height: 2;
-    text-align: center;
-    z-index: 1;
-  }
-
-  .screen-mascot {
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @keyframes screenBob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-
-  .screen-health {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.6rem;
-    color: #0a2820;
-    letter-spacing: 0.05em;
-    z-index: 1;
-  }
-
-  /* power LED */
-  .gb-led {
-    position: absolute;
-    top: 1rem; right: 1.2rem;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--red);
-    box-shadow: 0 0 6px var(--red);
-    animation: ledBlink 2s ease-in-out infinite;
-  }
-
-  @keyframes ledBlink { 0%, 100% { opacity: 1; } 85% { opacity: 1; } 90% { opacity: 0.3; } 95% { opacity: 1; } }
-
-  /* label */
-  .gb-label {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    color: #8850b0;
-    letter-spacing: 0.1em;
-    text-align: right;
-    margin-bottom: 0.5rem;
-    padding-right: 0.5rem;
-    text-shadow:
-      0px 1px 0px rgba(255,255,255,0.6),
-      0px -1px 0px rgba(0,0,0,0.25),
-      1px 0px 0px rgba(255,255,255,0.3),
-      -1px 0px 0px rgba(0,0,0,0.15);
-    filter: contrast(1.1);
-  }
-
-  /* d-pad */
-  .gb-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-
-  .dpad {
-    width: 64px;
-    height: 64px;
-    position: relative;
-  }
-
-  .dpad-h, .dpad-v {
-    position: absolute;
-    background: var(--pixel-dark);
-    border-radius: 3px;
-  }
-
+  .gameboy { background: linear-gradient(160deg, #e8d5f5 0%, #d4b8f0 40%, #c4a0e8 100%); border: 4px solid var(--pixel-dark); border-radius: 12px 12px 40px 12px; padding: 1.25rem 1.25rem 2rem; box-shadow: 6px 6px 0 var(--pixel-dark), 0 20px 50px rgba(155,89,255,0.25); position: relative; }
+  .gb-screen-bezel { background: var(--pixel-dark); border-radius: 8px 8px 20px 8px; padding: 0.85rem; margin-bottom: 1rem; position: relative; }
+  .gb-screen-bezel::before { content: 'DOT-MATRIX WITH STEREO SOUND'; position: absolute; top: -2rem; left: 0; font-family: 'Press Start 2P', monospace; font-size: 0.35rem; color: #9b70d8; letter-spacing: 0.06em; white-space: nowrap; }
+  .gb-screen { background: #91EBD3; border: 2px solid #1a1a1a; border-radius: 4px; aspect-ratio: 10/9; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.25rem; overflow: hidden; position: relative; }
+  .gb-screen::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 3px); pointer-events: none; z-index: 2; }
+  .screen-title { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #0a2820; letter-spacing: 0.05em; line-height: 2; text-align: center; z-index: 1; }
+  .screen-mascot { z-index: 1; display: flex; align-items: center; justify-content: center; }
+  .screen-health { font-family: 'Press Start 2P', monospace; font-size: 0.6rem; color: #0a2820; letter-spacing: 0.05em; z-index: 1; }
+  .gb-led { position: absolute; top: 1rem; right: 1.2rem; width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .gb-label { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: #8850b0; letter-spacing: 0.1em; text-align: right; margin-bottom: 0.5rem; padding-right: 0.5rem; }
+  .gb-controls { display: flex; justify-content: space-between; align-items: center; padding: 0 0.5rem; }
+  .dpad { width: 64px; height: 64px; position: relative; }
+  .dpad-h, .dpad-v { position: absolute; background: var(--pixel-dark); border-radius: 3px; }
   .dpad-h { top: 33%; left: 0; right: 0; height: 34%; }
   .dpad-v { left: 33%; top: 0; bottom: 0; width: 34%; }
-
-  .dpad-center {
-    position: absolute;
-    top: 33%; left: 33%; right: 33%; bottom: 33%;
-    background: var(--pixel-dark);
-    border-radius: 2px;
-  }
-
-  /* AB buttons */
-  .gb-buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .gb-btn {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 3px solid var(--pixel-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.45rem;
-    color: var(--white);
-    font-weight: bold;
-    box-shadow: 2px 2px 0 var(--pixel-dark);
-  }
-
+  .dpad-center { position: absolute; top: 33%; left: 33%; right: 33%; bottom: 33%; background: var(--pixel-dark); border-radius: 2px; }
+  .gb-buttons { display: flex; gap: 0.5rem; align-items: center; }
+  .gb-btn { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--pixel-dark); display: flex; align-items: center; justify-content: center; font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--white); font-weight: bold; box-shadow: 2px 2px 0 var(--pixel-dark); }
   .gb-btn-b { background: #A122C0; }
   .gb-btn-a { background: var(--red); }
-
-  /* start/select */
-  .gb-start-sel {
-    position: absolute;
-    bottom: 3.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .gb-mini-btn {
-    width: 32px; height: 8px;
-    background: var(--lavender-dark);
-    border: 2px solid var(--pixel-dark);
-    border-radius: 4px;
-  }
-
-  /* speaker holes */
-  .gb-speaker {
-    position: absolute;
-    bottom: 1.25rem; right: 1.25rem;
-    display: grid;
-    grid-template-columns: repeat(4, 6px);
-    gap: 3px;
-  }
-
-  .gb-hole {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--pixel-dark);
-    opacity: 0.6;
-  }
+  .gb-start-sel { position: absolute; bottom: 3.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; }
+  .gb-mini-btn { width: 32px; height: 8px; background: var(--lavender-dark); border: 2px solid var(--pixel-dark); border-radius: 4px; }
+  .gb-speaker { position: absolute; bottom: 1.25rem; right: 1.25rem; display: grid; grid-template-columns: repeat(4, 6px); gap: 3px; }
+  .gb-hole { width: 5px; height: 5px; border-radius: 50%; background: var(--pixel-dark); opacity: 0.6; }
 
   /* ===== DIVIDER ===== */
-  .pixel-divider {
-    height: 12px;
-    background: repeating-linear-gradient(90deg,
-      #3FBB9E 0px, #3FBB9E 20px,
-      #ff6eb4 20px, #ff6eb4 40px,
-      #A122C0 40px, #A122C0 60px,
-      #ffe566 60px, #ffe566 80px,
-      #91EBD3 80px, #91EBD3 100px,
-      #ff8c42 100px, #ff8c42 120px,
-      #3FBB9E 120px, #3FBB9E 140px
-    );
-    border-top: 3px solid var(--pixel-dark);
-    border-bottom: 3px solid var(--pixel-dark);
-    position: relative;
-    z-index: 1;
-  }
+  .pixel-divider { height: 12px; background: repeating-linear-gradient(90deg, #3FBB9E 0px, #3FBB9E 20px, #ff6eb4 20px, #ff6eb4 40px, #A122C0 40px, #A122C0 60px, #ffe566 60px, #ffe566 80px, #91EBD3 80px, #91EBD3 100px, #ff8c42 100px, #ff8c42 120px, #3FBB9E 120px, #3FBB9E 140px); border-top: 3px solid var(--pixel-dark); border-bottom: 3px solid var(--pixel-dark); position: relative; z-index: 1; }
 
   /* ===== SECTIONS ===== */
-  .section-wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
-  }
-
+  .section-wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
   .section-bg-white { background: var(--white); }
-  .section-bg-soft {
-    background:
-      radial-gradient(ellipse at 0% 50%, rgba(255,179,217,0.2) 0%, transparent 60%),
-      radial-gradient(ellipse at 100% 50%, rgba(78,205,196,0.2) 0%, transparent 60%),
-      var(--lavender-bg);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-  }
-
-  .section-badge {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    padding: 0.4rem 0.75rem;
-    background: var(--yellow);
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 3px 3px 0 var(--pixel-dark);
-    color: var(--pixel-dark);
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-  }
-
-  .section-title {
-    font-family: 'Lilita One', sans-serif;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    color: var(--text);
-    flex: 1;
-    line-height: 1;
-    -webkit-text-stroke: 1.5px var(--pixel-dark);
-    text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
-  }
-
+  .section-bg-soft { background: radial-gradient(ellipse at 0% 50%, rgba(255,179,217,0.2) 0%, transparent 60%), radial-gradient(ellipse at 100% 50%, rgba(78,205,196,0.2) 0%, transparent 60%), var(--lavender-bg); }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .section-badge { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; padding: 0.4rem 0.75rem; background: var(--yellow); border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark); color: var(--pixel-dark); letter-spacing: 0.05em; white-space: nowrap; }
+  .section-title { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--text); flex: 1; line-height: 1.05; letter-spacing: -0.02em; }
   .section-title .accent { color: var(--purple); }
   .section-title .accent2 { color: var(--hot-pink); }
 
-  /* ===== WORK ===== */
+  /* ===== WORK CARDS ===== */
   .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-
-  .work-card {
-    background: var(--white);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 5px 5px 0 var(--pixel-dark);
-    transition: all 0.12s;
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-    color: inherit;
-  }
-
+  .work-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 3px solid var(--pixel-dark); box-shadow: 5px 5px 0 var(--pixel-dark); transition: all 0.12s; cursor: pointer; text-decoration: none; display: block; color: inherit; }
   .work-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--pixel-dark); }
   .work-card:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--pixel-dark); }
-
-  .work-thumb {
-    aspect-ratio: 16/10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    position: relative;
-    border-bottom: 3px solid var(--pixel-dark);
-  }
-
+  .work-card:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--pixel-dark); }
+  .work-thumb { aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; border-bottom: 3px solid var(--pixel-dark); }
   .work-thumb.p1 { background: linear-gradient(135deg, var(--baby-pink), var(--lavender-mid), var(--baby-blue)); }
   .work-thumb.p2 { background: linear-gradient(135deg, var(--baby-blue), var(--mint), var(--lavender-mid)); }
   .work-thumb.p3 { background: linear-gradient(135deg, var(--yellow), var(--baby-pink), var(--lavender-mid)); }
   .work-thumb.p4 { background: linear-gradient(135deg, var(--mint), var(--baby-blue), var(--teal)); }
   .work-thumb.p5 { background: linear-gradient(135deg, var(--lavender-mid), var(--baby-pink), var(--hot-pink)); }
   .work-thumb.p-locked { background: linear-gradient(135deg, #d4c5e8, #b8a8d0, #9b90b8); }
-  .work-card.coming-soon { opacity: 0.6; cursor: default; }
-  .work-card.coming-soon:hover { transform: none; box-shadow: 5px 5px 0 var(--pixel-dark); }
-  .work-card.coming-soon:hover .work-thumb::after { opacity: 0; }
-  .coming-soon-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Press Start 2P', monospace; font-size: 0.45rem; background: var(--pixel-dark); color: var(--yellow); padding: 0.4rem 0.75rem; letter-spacing: 0.1em; white-space: nowrap; border: 2px solid var(--yellow); box-shadow: 2px 2px 0 rgba(0,0,0,0.4); }
-
-  /* VIEW CASE STUDY overlay */
-  .work-thumb::after { content: 'VIEW CASE STUDY ▶'; position: absolute; inset: 0; background: rgba(10,5,32,0.75); display: flex; align-items: center; justify-content: center; font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--yellow); letter-spacing: 0.1em; opacity: 0; transition: opacity 0.15s; }
+  .work-card.coming-soon { opacity: 0.6; cursor: default; pointer-events: none; }
+  .coming-soon-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; background: var(--pixel-dark); color: var(--yellow); padding: 0.4rem 0.75rem; letter-spacing: 0.1em; white-space: nowrap; border: 2px solid var(--yellow); box-shadow: 2px 2px 0 rgba(0,0,0,0.4); }
+  .work-thumb::after { content: 'VIEW CASE STUDY ▶'; position: absolute; inset: 0; background: rgba(10,5,32,0.75); display: flex; align-items: center; justify-content: center; font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--yellow); letter-spacing: 0.1em; opacity: 0; transition: opacity 0.15s; }
   .work-card:hover .work-thumb::after { opacity: 1; }
-
+  .work-card:focus-visible .work-thumb::after { opacity: 1; }
   .work-card-body { padding: 1.1rem; }
-
   .work-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .work-year { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--text-light); }
+  .work-tag { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.5rem; background: #A122C0; color: white; border: 2px solid var(--pixel-dark); box-shadow: 2px 2px 0 var(--pixel-dark); border-radius: 4px; }
+  .work-title { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.35rem; letter-spacing: -0.01em; line-height: 1.2; }
+  .work-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; font-weight: 600; }
 
-  .work-year {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.45rem;
-    color: var(--text-light);
-  }
-
-  .work-tag {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    font-size: 0.58rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.15rem 0.5rem;
-    background: #A122C0;
-    color: white;
-    border: 2px solid var(--pixel-dark);
-    box-shadow: 2px 2px 0 var(--pixel-dark);
-    border-radius: 4px;
-  }
-
-  .work-title {
-    font-family: 'Lilita One', sans-serif;
-    font-size: 1.2rem;
-    color: var(--text);
-    margin-bottom: 0.35rem;
-    .work-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.5; font-weight: 600; }
-  }
-
-  .work-desc { font-size: 0.82rem; color: var(--text); line-height: 1.5; font-weight: 600; }
-
-  /* ===== ARTIFACTS — cassette tape cards ===== */
-  .artifacts-intro {
-    font-size: 0.92rem;
-    color: var(--text-mid);
-    max-width: 46rem;
-    margin: 0 auto 2.5rem;
-    text-align: center;
-    line-height: 1.7;
-    font-weight: 700;
-  }
-
-  .artifacts-intro em { color: var(--hot-pink); font-style: normal; font-weight: 900; }
-
+  /* ===== PLAYGROUND / SPECIMEN CARDS ===== */
+  .artifacts-intro { font-size: 0.92rem; color: var(--text-mid); max-width: 46rem; margin: 0 auto 2.5rem; text-align: center; line-height: 1.7; font-weight: 700; }
   .specimen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 
+  /* Active specimens = <button> (WCAG 4.1.2) */
   .specimen {
-    background: var(--white);
-    border-radius: 8px;
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 4px 4px 0 var(--pixel-dark);
-    padding: 1rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    cursor: pointer;
-    transition: all 0.12s;
-    min-height: 150px;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
+    background: var(--white); border-radius: 8px; border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
+    padding: 1rem 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    cursor: pointer; transition: all 0.12s; min-height: 150px; position: relative; overflow: hidden;
+    color: inherit; font-family: inherit; -webkit-appearance: none; appearance: none; width: 100%; text-align: center;
   }
-
-  /* rainbow stripe top */
-  .specimen::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 6px;
-    background: repeating-linear-gradient(90deg,
-      var(--pink) 0, var(--pink) 20%,
-      var(--yellow) 20%, var(--yellow) 40%,
-      var(--teal) 40%, var(--teal) 60%,
-      var(--purple) 60%, var(--purple) 80%,
-      var(--orange) 80%, var(--orange) 100%
-    );
-  }
-
+  .specimen::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 20%, var(--yellow) 20%, var(--yellow) 40%, var(--teal) 40%, var(--teal) 60%, var(--purple) 60%, var(--purple) 80%, var(--orange) 80%, var(--orange) 100%); }
   .specimen:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--pixel-dark); }
   .specimen:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--pixel-dark); }
+  .specimen:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--pixel-dark); }
 
-  .specimen-num {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.45rem;
-    color: var(--hot-pink);
-    letter-spacing: 0.1em;
-    align-self: flex-start;
-    margin-top: 0.4rem;
-  }
+  /* Coming-soon specimen placeholders — non-interactive divs */
+  .specimen.coming-soon { opacity: 0.4; box-shadow: 3px 3px 0 var(--pixel-dark); border-style: dashed; cursor: default; pointer-events: none; }
+  .specimen.coming-soon::before { opacity: 0.3; }
+  .specimen.coming-soon .specimen-icon { font-size: 1.2rem; opacity: 0.4; }
+  .specimen.coming-soon .specimen-name { color: var(--text-light); font-style: italic; font-size: 0.7rem; }
 
-  .specimen-icon {
-    font-size: 2.2rem;
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-
-  .specimen-name {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 0.72rem;
-    color: var(--text);
-    text-align: center;
-    line-height: 1.3;
-  }
-
-  .specimen-tag {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.38rem;
-    color: var(--purple);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .specimen.empty {
-    opacity: 0.35;
-    box-shadow: 3px 3px 0 var(--pixel-dark);
-    border-style: dashed;
-  }
-
-  .specimen.empty::before { opacity: 0.3; }
-  .specimen.empty .specimen-icon { font-size: 1.2rem; opacity: 0.4; }
-  .specimen.empty .specimen-name { color: var(--text-light); font-style: italic; font-weight: 600; font-size: 0.65rem; }
-
-  /* playground CTA */
+  .specimen-num { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--hot-pink); letter-spacing: 0.1em; align-self: flex-start; margin-top: 0.4rem; }
+  .specimen-icon { font-size: 2.2rem; flex: 1; display: flex; align-items: center; }
+  .specimen-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.78rem; color: var(--text); text-align: center; line-height: 1.3; }
+  .specimen-tag { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; }
   .playground-cta { text-align: center; margin-top: 2.5rem; }
 
   /* ===== ABOUT ===== */
   .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; }
-
-  .about-card {
-    background: var(--white);
-    border-radius: 12px;
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 6px 6px 0 var(--pixel-dark);
-    overflow: hidden;
-  }
-
-  .about-card-top {
-    background: repeating-linear-gradient(90deg,
-      var(--pink) 0, var(--pink) 16.66%,
-      var(--yellow) 16.66%, var(--yellow) 33.33%,
-      var(--teal) 33.33%, var(--teal) 50%,
-      var(--purple) 50%, var(--purple) 66.66%,
-      var(--orange) 66.66%, var(--orange) 83.33%,
-      var(--blue) 83.33%, var(--blue) 100%
-    );
-    height: 12px;
-  }
-
-  .about-card-header {
-    background: #FFC9F9;
-    padding: 0.65rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid var(--pixel-dark);
-  }
-
-  .about-card-header span {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.45rem;
-    color: #0a0520;
-    letter-spacing: 0.08em;
-  }
-
-  .about-portrait {
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at 50% 40%, rgba(255,179,217,0.3), var(--lavender-bg) 70%);
-    min-height: 170px;
-    border-bottom: 3px solid var(--pixel-dark);
-  }
-
-  .about-portrait img {
-    width: 120px;
-    filter: drop-shadow(3px 3px 0 var(--purple));
-  }
-
+  .about-card { background: var(--white); border-radius: 12px; border: 3px solid var(--pixel-dark); box-shadow: 6px 6px 0 var(--pixel-dark); overflow: hidden; }
+  .about-card-top { background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 16.66%, var(--yellow) 16.66%, var(--yellow) 33.33%, var(--teal) 33.33%, var(--teal) 50%, var(--purple) 50%, var(--purple) 66.66%, var(--orange) 66.66%, var(--orange) 83.33%, var(--blue) 83.33%, var(--blue) 100%); height: 12px; }
+  .about-card-header { background: #FFC9F9; padding: 0.65rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--pixel-dark); }
+  .about-card-header span { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: #0a0520; letter-spacing: 0.08em; }
+  .about-portrait { padding: 1.5rem; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 40%, rgba(255,179,217,0.3), var(--lavender-bg) 70%); min-height: 170px; border-bottom: 3px solid var(--pixel-dark); }
+  .about-portrait img { width: 120px; filter: drop-shadow(3px 3px 0 var(--purple)); }
   .about-stats { padding: 0; }
-
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.65rem 1rem;
-    border-bottom: 2px solid var(--lavender-mid);
-    font-size: 0.78rem;
-  }
-
+  .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1rem; border-bottom: 2px solid var(--lavender-mid); font-size: 0.78rem; }
   .stat-row:last-child { border-bottom: none; }
-  .stat-label { color: var(--text-light); font-weight: 700; font-size: 0.72rem; }
+  .stat-label { color: var(--text-light); font-weight: 700; font-size: 0.75rem; }
   .stat-value { color: var(--text); font-weight: 800; text-align: right; }
-  .stat-value.open { color: var(--teal); }
+  .stat-value.open { color: #0e7a5f; }
 
-  .about-lead {
-    font-family: 'Lilita One', sans-serif;
-    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-    color: var(--text);
-    line-height: 1.3;
-    margin-bottom: 1.25rem;
-    -webkit-text-stroke: 0.5px rgba(0,0,0,0.2);
-  }
-
+  .about-lead { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text); line-height: 1.4; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
   .about-lead .hl { color: var(--purple); }
-  .about-lead .hl2 { color: var(--teal); }
-
-  .about-body {
-    font-size: 0.92rem;
-    color: var(--text-mid);
-    line-height: 1.75;
-    margin-bottom: 1.25rem;
-    font-weight: 600;
-  }
-
-  .about-placeholder {
-    display: inline-block;
-    padding: 0.15em 0.5em;
-    background: rgba(255,45,155,0.06);
-    border: 2px dashed var(--pink);
-    border-radius: 4px;
-    color: var(--hot-pink);
-    font-style: italic;
-  }
+  .about-lead .hl2 { color: #0e7a5f; }
+  .about-body { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 1.25rem; font-weight: 600; }
+  .about-placeholder { display: inline-block; padding: 0.15em 0.5em; background: rgba(255,45,155,0.06); border: 2px dashed var(--pink); border-radius: 4px; color: var(--hot-pink); font-style: italic; }
 
   .contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 3px dashed var(--lavender-mid); }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1rem;
-    background: var(--white);
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 3px 3px 0 var(--pixel-dark);
-    border-radius: 6px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: var(--purple);
-    text-decoration: none;
-    transition: all 0.12s;
-  }
-
+  .contact-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--white); border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark); border-radius: 6px; font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--purple); text-decoration: none; transition: all 0.12s; }
   .contact-link:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--pixel-dark); background: var(--lavender-mid); }
+  .contact-link:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--pixel-dark); }
 
   /* ===== CONTACT ===== */
-  .contact-pod {
-    background: var(--white);
-    border-radius: 16px;
-    border: 3px solid var(--pixel-dark);
-    box-shadow: 8px 8px 0 var(--pixel-dark);
-    padding: 4rem 3rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .contact-pod::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 10px;
-    background: repeating-linear-gradient(90deg,
-      var(--pink) 0, var(--pink) 16.66%,
-      var(--yellow) 16.66%, var(--yellow) 33.33%,
-      var(--teal) 33.33%, var(--teal) 50%,
-      var(--purple) 50%, var(--purple) 66.66%,
-      var(--orange) 66.66%, var(--orange) 83.33%,
-      var(--blue) 83.33%, var(--blue) 100%
-    );
-  }
-
-  .contact-signal {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.52rem;
-    color: var(--teal);
-    letter-spacing: 0.12em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .signal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); animation: pulse 1.4s ease-in-out infinite; box-shadow: 0 0 6px var(--teal); }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-  .contact-headline {
-    font-family: 'Lilita One', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--text);
-    line-height: 1.15;
-    margin-bottom: 1.75rem;
-    -webkit-text-stroke: 1px rgba(0,0,0,0.15);
-  }
-
+  .contact-pod { background: var(--white); border-radius: 16px; border: 3px solid var(--pixel-dark); box-shadow: 8px 8px 0 var(--pixel-dark); padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden; max-width: 680px; margin: 0 auto; }
+  .contact-pod::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 16.66%, var(--yellow) 16.66%, var(--yellow) 33.33%, var(--teal) 33.33%, var(--teal) 50%, var(--purple) 50%, var(--purple) 66.66%, var(--orange) 66.66%, var(--orange) 83.33%, var(--blue) 83.33%, var(--blue) 100%); }
+  .contact-signal { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: #0e7a5f; letter-spacing: 0.12em; display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .signal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); }
+  .contact-headline { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3.5vw, 2.4rem); color: var(--text); line-height: 1.2; margin-bottom: 1.75rem; letter-spacing: -0.02em; }
   .contact-headline .accent { color: var(--purple); }
-
-  .contact-email {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.85rem, 1.5vw, 1rem);
-    color: var(--purple);
-    text-decoration: none;
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    border: 3px solid var(--pixel-dark);
-    background: var(--lavender-mid);
-    box-shadow: 4px 4px 0 var(--pixel-dark);
-    transition: all 0.12s;
-    margin-bottom: 1.5rem;
-  }
-
+  .contact-email { display: inline-flex; align-items: center; gap: 0.6rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.5vw, 1rem); color: var(--purple); text-decoration: none; padding: 0.85rem 2rem; border-radius: 8px; border: 3px solid var(--pixel-dark); background: var(--lavender-mid); box-shadow: 4px 4px 0 var(--pixel-dark); transition: all 0.12s; margin-bottom: 1.5rem; }
   .contact-email:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
-
+  .contact-email:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
   .contact-sub { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; max-width: 26rem; margin: 0 auto; font-weight: 600; }
 
   /* ===== FOOTER ===== */
-  footer {
-    background: #A122C0;
-    border-top: 4px solid var(--pixel-dark);
-    padding: 1.25rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
+  footer { background: #A122C0; border-top: 4px solid var(--pixel-dark); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; flex-wrap: wrap; gap: 1rem; }
   .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
   .footer-brand img { height: 28px; filter: drop-shadow(2px 2px 0 var(--pink)); }
-  .footer-brand span { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--yellow); letter-spacing: 0.08em; line-height: 1.8; }
-
-  .footer-hits {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.5rem;
-    color: var(--yellow);
-    letter-spacing: 0.08em;
-    padding: 0.4rem 0.75rem;
-    border: 2px solid var(--yellow);
-    background: rgba(0,0,0,0.2);
-    transition: all 0.3s;
-  }
-  .footer-hits:hover { background: rgba(255,229,102,0.15); border-color: var(--teal); color: var(--teal); }
-  .footer-hits[data-found="true"] { background: rgba(63,187,158,0.2); border-color: var(--teal); color: var(--teal); letter-spacing: 0.05em; }
-
+  .footer-brand span { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--yellow); letter-spacing: 0.08em; line-height: 1.8; }
+  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--yellow); letter-spacing: 0.08em; padding: 0.4rem 0.75rem; border: 2px solid var(--yellow); background: rgba(0,0,0,0.2); transition: all 0.3s; cursor: pointer; border-radius: 4px; }
+  .footer-hits:hover, .footer-hits:focus-visible { background: rgba(255,229,102,0.15); border-color: var(--teal); color: var(--teal); }
+  .footer-hits:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+  .footer-hits[data-found="true"] { background: rgba(63,187,158,0.2); border-color: var(--teal); color: var(--teal); }
   .footer-links { display: flex; gap: 1.25rem; }
-  .footer-links a { font-family: 'Nunito', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 700; transition: color 0.15s; }
+  .footer-links a { font-family: 'Nunito', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 700; transition: color 0.15s; }
   .footer-links a:hover { color: var(--yellow); }
+  .footer-links a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; color: var(--yellow); border-radius: 2px; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
@@ -1011,7 +401,6 @@
     .hero-art { order: -1; }
     .dropdown-menu { left: auto; right: 0; }
   }
-
   @media (max-width: 600px) {
     .specimen-grid { grid-template-columns: repeat(2, 1fr); }
     .nav-inner { padding: 0.75rem 1rem; }
@@ -1021,56 +410,58 @@
     .nav-links a { padding: 0.45rem 0.6rem; font-size: 0.7rem; }
   }
 
-  /* reveal */
-  .reveal { opacity: 0; transform: translateY(18px); animation: up 0.7s ease forwards; }
+  .reveal { opacity: 0; transform: translateY(18px); }
   .d1 { animation-delay: 0.1s; }
   .d2 { animation-delay: 0.25s; }
   .d3 { animation-delay: 0.4s; }
   .d4 { animation-delay: 0.55s; }
-  @keyframes up { to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
+<!-- SKIP LINK (WCAG 2.4.1) -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <!-- NAV -->
-<nav>
+<nav aria-label="Main navigation">
   <div class="nav-inner">
-    <a class="nav-logo" href="#top">
-<img src="assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost logo" style="height:44px;width:auto;filter:drop-shadow(2px 2px 0 #0a0520);" />
+    <a class="nav-logo" href="#top" aria-label="TomiUX — home">
+      <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="" aria-hidden="true" style="height:44px;width:auto;filter:drop-shadow(2px 2px 0 #0a0520);" />
       <span class="nav-logo-text"><span class="logo-tomi">Tomi</span><span class="logo-ux">UX</span></span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" role="list">
       <li class="nav-dropdown">
-        <a href="#work">Featured</a>
-        <div class="dropdown-menu">
-          <a href="august/"><span class="dropdown-tag">IxD</span> August Smart Lock</a>
-          <a href="philz/"><span class="dropdown-tag">RESEARCH</span> Philz Coffee</a>
-          <a href="yelp/"><span class="dropdown-tag">RESEARCH</span> Yelp Usability Study</a>
-          <a href="coursera/"><span class="dropdown-tag">A11Y</span> Coursera Cognitive Audit</a>
-          <a href="stubhub/"><span class="dropdown-tag">A11Y</span> StubHub Annotations</a>
+        <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false" id="featured-menu-btn">Featured</button>
+        <div class="dropdown-menu" role="menu" aria-labelledby="featured-menu-btn" id="featured-menu">
+          <a href="august/" role="menuitem"><span class="dropdown-tag" aria-hidden="true">IxD</span> August Smart Lock</a>
+          <a href="philz" role="menuitem"><span class="dropdown-tag" aria-hidden="true">RESEARCH</span> Philz Coffee</a>
+          <a href="yelp/" role="menuitem"><span class="dropdown-tag" aria-hidden="true">RESEARCH</span> Yelp Usability Study</a>
+          <a href="coursera/" role="menuitem"><span class="dropdown-tag" aria-hidden="true">A11Y</span> Coursera Cognitive Audit</a>
+          <a href="stubhub/" role="menuitem"><span class="dropdown-tag" aria-hidden="true">A11Y</span> StubHub Annotations</a>
         </div>
       </li>
       <li><a href="playground.html">Playground</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="resume.pdf" class="nav-cv" target="_blank" rel="noopener">CV ↗</a></li>
+      <li><a href="resume.pdf" class="nav-cv" target="_blank" rel="noopener" aria-label="Download CV (opens in new tab)">CV ↗</a></li>
     </ul>
   </div>
 </nav>
 
+<main id="main-content">
+
 <!-- HERO -->
-<section class="hero" id="top">
-  <!-- floating pixel decorations -->
-  <span class="pixel-deco" style="top:12%;left:6%;animation-delay:0s;">🎮</span>
-  <span class="pixel-deco" style="top:20%;right:8%;animation-delay:1s;font-size:1.4rem;">💿</span>
-  <span class="pixel-deco" style="bottom:30%;left:4%;animation-delay:2s;font-size:1.2rem;">📼</span>
-  <span class="pixel-deco" style="top:65%;right:6%;animation-delay:0.5s;font-size:1.3rem;">💾</span>
-  <span class="pixel-deco" style="bottom:15%;right:15%;animation-delay:1.5s;font-size:1rem;">⚡</span>
-  <span class="pixel-deco" style="top:40%;left:3%;animation-delay:3s;font-size:1rem;">🌟</span>
+<section class="hero" id="top" aria-label="Introduction">
+  <span class="pixel-deco" style="top:12%;left:6%;animation-delay:0s;" aria-hidden="true">🎮</span>
+  <span class="pixel-deco" style="top:20%;right:8%;animation-delay:1s;font-size:1.4rem;" aria-hidden="true">💿</span>
+  <span class="pixel-deco" style="bottom:30%;left:4%;animation-delay:2s;font-size:1.2rem;" aria-hidden="true">📼</span>
+  <span class="pixel-deco" style="top:65%;right:6%;animation-delay:0.5s;font-size:1.3rem;" aria-hidden="true">💾</span>
+  <span class="pixel-deco" style="bottom:15%;right:15%;animation-delay:1.5s;font-size:1rem;" aria-hidden="true">⚡</span>
+  <span class="pixel-deco" style="top:40%;left:3%;animation-delay:3s;font-size:1rem;" aria-hidden="true">🌟</span>
 
   <div class="hero-layout">
     <div class="hero-text">
-      <div class="hero-badge reveal">★ UX DESIGNER // SAN JOSE, CA</div>
+      <div class="hero-badge reveal" aria-hidden="true">★ UX DESIGNER // SAN JOSE, CA</div>
       <h1 class="hero-name">
         <span class="line1 reveal d1">Stacy</span>
         <span class="line2 reveal d2">Tomasi</span>
@@ -1078,12 +469,12 @@
       <p class="hero-tagline reveal d3">Designing things that work. Fixing things that don't.</p>
       <p class="hero-role reveal d3">UX Designer &amp; Usability Tester</p>
       <div class="hero-cta reveal d4">
-        <a href="#work" class="btn btn-primary">▶ FEATURED WORK</a>
-        <a href="#about" class="btn btn-secondary">▶ ABOUT ME</a>
+        <a href="#work" class="btn btn-primary">▶ Featured Work</a>
+        <a href="#about" class="btn btn-secondary">▶ About Me</a>
       </div>
     </div>
 
-    <div class="hero-art reveal d2">
+    <div class="hero-art reveal d2" aria-hidden="true">
       <div class="gameboy-wrap">
         <div class="gameboy">
           <div class="gb-led"></div>
@@ -1091,96 +482,89 @@
           <div class="gb-screen-bezel">
             <div class="gb-screen">
               <div class="screen-title">TOMIUX<br/>PORTFOLIO</div>
-              <div class="screen-mascot"><img src="assets/ghost_logo.png" alt="TomiUX ghost" style="width:90px;height:auto;animation:screenBob 2s ease-in-out infinite;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(2px 2px 0 rgba(0,0,0,0.3));" /></div>
+              <div class="screen-mascot"><img src="assets/ghost_logo.png" alt="" style="width:90px;height:auto;filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(2px 2px 0 rgba(0,0,0,0.3));" /></div>
               <div class="screen-health">HP ████████ 100</div>
             </div>
           </div>
           <div class="gb-controls">
-            <div class="dpad">
-              <div class="dpad-h"></div>
-              <div class="dpad-v"></div>
-              <div class="dpad-center"></div>
-            </div>
+            <div class="dpad"><div class="dpad-h"></div><div class="dpad-v"></div><div class="dpad-center"></div></div>
             <div class="gb-buttons">
               <div class="gb-btn gb-btn-b">B</div>
               <div class="gb-btn gb-btn-a">A</div>
             </div>
           </div>
-          <div class="gb-start-sel">
-            <div class="gb-mini-btn"></div>
-            <div class="gb-mini-btn"></div>
-          </div>
+          <div class="gb-start-sel"><div class="gb-mini-btn"></div><div class="gb-mini-btn"></div></div>
           <div class="gb-speaker">
             <div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div>
             <div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div>
             <div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div><div class="gb-hole"></div>
           </div>
         </div>
-        <div class="gb-sticker gb-sticker-1">★ NEW ★</div>
-        <div class="gb-sticker gb-sticker-2">LEVEL UP</div>
-        <div class="gb-sticker gb-sticker-3">PLAYER 1</div>
-        <div class="gb-sticker gb-sticker-4">EXTRA LIFE</div>
+        <div class="gb-sticker gb-sticker-1" aria-hidden="true">★ NEW ★</div>
+        <div class="gb-sticker gb-sticker-2" aria-hidden="true">LEVEL UP</div>
+        <div class="gb-sticker gb-sticker-3" aria-hidden="true">PLAYER 1</div>
+        <div class="gb-sticker gb-sticker-4" aria-hidden="true">EXTRA LIFE</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="pixel-divider"></div>
+<div class="pixel-divider" aria-hidden="true"></div>
 
 <!-- FEATURED WORK -->
 <div class="section-bg-white" style="position:relative;z-index:1;">
   <div class="section-wrap" id="work">
     <div class="section-header">
-      <span class="section-badge">01 // FEATURED</span>
-      <h2 class="section-title"><span style="-webkit-text-fill-color:#A122C0;color:#A122C0;-webkit-text-stroke:1.5px #0a0520;text-shadow:3px 3px 0 rgba(0,0,0,0.1);">Featured</span> <span class="accent">Work</span></h2>
+      <span class="section-badge" aria-hidden="true">01 // FEATURED</span>
+      <h2 class="section-title"><span style="color:#A122C0;">Featured</span> <span class="accent">Work</span></h2>
     </div>
     <div class="work-grid">
       <a href="august/" class="work-card">
-        <div class="work-thumb p1">🔒</div>
+        <div class="work-thumb p1" aria-hidden="true">🔒</div>
         <div class="work-card-body">
           <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">IxD</span></div>
           <h3 class="work-title">August Smart Lock</h3>
           <p class="work-desc">Redesigned the guest access and device-switching flow for a smart lock app — physical paper prototype to polished Figma prototype in one semester.</p>
         </div>
       </a>
-      <a href="philz/" class="work-card">
-        <div class="work-thumb p2">☕</div>
+      <a href="philz" class="work-card">
+        <div class="work-thumb p2" aria-hidden="true">☕</div>
         <div class="work-card-body">
-          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">UX RESEARCH</span></div>
+          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">UX Research</span></div>
           <h3 class="work-title">Philz Coffee</h3>
           <p class="work-desc">Moderated usability study of the Philz Coffee mobile app. Uncovered a critical "UI Disconnect" where users failed to recognize interactive elements — and mapped a path to fix it.</p>
         </div>
       </a>
       <a href="yelp/" class="work-card">
-        <div class="work-thumb p3">⭐</div>
+        <div class="work-thumb p3" aria-hidden="true">⭐</div>
         <div class="work-card-body">
-          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">UX RESEARCH</span></div>
+          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">UX Research</span></div>
           <h3 class="work-title">Yelp Usability Study</h3>
           <p class="work-desc">Unmoderated usability study evaluating Yelp's core discovery and decision-making flows. Identified friction patterns across real task scenarios.</p>
         </div>
       </a>
       <a href="coursera/" class="work-card">
-        <div class="work-thumb p4">🧠</div>
+        <div class="work-thumb p4" aria-hidden="true">🧠</div>
         <div class="work-card-body">
-          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">ACCESSIBILITY</span></div>
+          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">Accessibility</span></div>
           <h3 class="work-title">Coursera Cognitive Audit</h3>
           <p class="work-desc">Cognitive accessibility audit of Coursera's web and mobile platforms — introducing original frameworks: the cognitive budget, Search Tax, and Interaction Tax.</p>
         </div>
       </a>
       <a href="stubhub/" class="work-card">
-        <div class="work-thumb p5">♿</div>
+        <div class="work-thumb p5" aria-hidden="true">♿</div>
         <div class="work-card-body">
-          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">ACCESSIBILITY</span></div>
+          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag">Accessibility</span></div>
           <h3 class="work-title">StubHub A11y Annotations</h3>
           <p class="work-desc">Accessibility annotation set for StubHub, written for developer handoff. Applied WCAG 2.1 standards to real product screens with actionable, implementation-ready specs.</p>
         </div>
       </a>
-      <div class="work-card coming-soon">
-        <div class="work-thumb p-locked" style="position:relative;">
+      <div class="work-card coming-soon" aria-label="Meatball — master's capstone, in progress">
+        <div class="work-thumb p-locked" style="position:relative;" aria-hidden="true">
           <div class="coming-soon-badge">🔐 IN PROGRESS</div>
         </div>
         <div class="work-card-body">
-          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag" style="background:var(--text-light);">MS PROJECT</span></div>
+          <div class="work-meta"><span class="work-year">2026</span><span class="work-tag" style="background:var(--text-light);">MS Project</span></div>
           <h3 class="work-title" style="color:var(--text-light);">Meatball</h3>
           <p class="work-desc">Master's capstone in progress. Check back when it's ready — it's worth the wait.</p>
         </div>
@@ -1189,60 +573,82 @@
   </div>
 </div>
 
-<div class="pixel-divider"></div>
+<div class="pixel-divider" aria-hidden="true"></div>
 
 <!-- PLAYGROUND PREVIEW -->
 <div class="section-bg-soft" style="position:relative;z-index:1;">
   <div class="section-wrap" id="playground">
     <div class="section-header">
-      <span class="section-badge">02 // PLAYGROUND</span>
+      <span class="section-badge" aria-hidden="true">02 // PLAYGROUND</span>
       <h2 class="section-title"><span class="accent2">The</span> <span class="accent2">Playground</span></h2>
     </div>
     <p class="artifacts-intro">
-  The real world is just a bigger playground. <em style="color:var(--hot-pink);font-style:normal;font-weight:900;">Scraped knees everywhere.</em><br/>
-  Here's who got sent to the nurse's office, and how I slapped on a <em style="background:var(--yellow);color:var(--pixel-dark);font-style:normal;font-weight:900;padding:0.1em 0.4em;border-radius:4px;border:2px solid var(--pixel-dark);">band-aid</em>.
-</p>
+      The real world is just a bigger playground. <em style="color:var(--hot-pink);font-style:normal;font-weight:900;">Scraped knees everywhere.</em><br/>
+      Here's who got sent to the nurse's office, and how I slapped on a <em style="background:var(--yellow);color:var(--pixel-dark);font-style:normal;font-weight:900;padding:0.1em 0.4em;border-radius:4px;border:2px solid var(--pixel-dark);">band-aid</em>.
+    </p>
     <div class="specimen-grid">
-      <div class="specimen"><span class="specimen-num">№ 001</span><div class="specimen-icon">✕</div><span class="specimen-name">The Runaway X</span><span class="specimen-tag">CLOSE-BUTTON</span></div>
-      <div class="specimen"><span class="specimen-num">№ 002</span><div class="specimen-icon">◐</div><span class="specimen-name">Eternal Spinner</span><span class="specimen-tag">LOADER</span></div>
-      <div class="specimen"><span class="specimen-num">№ 003</span><div class="specimen-icon">⎌</div><span class="specimen-name">The Un-Undoable</span><span class="specimen-tag">DESTRUCTIVE</span></div>
-      <div class="specimen"><span class="specimen-num">№ 004</span><div class="specimen-icon">☑</div><span class="specimen-name">Consent Trap</span><span class="specimen-tag">DARK PATTERN</span></div>
-      <div class="specimen empty"><span class="specimen-num">№ 005</span><div class="specimen-icon">·</div><span class="specimen-name">Hiding in plain sight</span></div>
-      <div class="specimen empty"><span class="specimen-num">№ 006</span><div class="specimen-icon">·</div><span class="specimen-name">Pending capture</span></div>
-      <div class="specimen empty"><span class="specimen-num">№ 007</span><div class="specimen-icon">·</div><span class="specimen-name">Still in the wild</span></div>
-      <div class="specimen empty"><span class="specimen-num">№ 008</span><div class="specimen-icon">·</div><span class="specimen-name">Hiding in plain sight</span></div>
+      <!-- Active specimens: <button> elements with full keyboard access (WCAG 4.1.2) -->
+      <button class="specimen" aria-label="The Runaway X — close button pattern, coming soon">
+        <span class="specimen-num" aria-hidden="true">№ 001</span>
+        <div class="specimen-icon" aria-hidden="true">✕</div>
+        <span class="specimen-name">The Runaway X</span>
+        <span class="specimen-tag">Close-button</span>
+      </button>
+      <button class="specimen" aria-label="Eternal Spinner — loader pattern, coming soon">
+        <span class="specimen-num" aria-hidden="true">№ 002</span>
+        <div class="specimen-icon" aria-hidden="true">◐</div>
+        <span class="specimen-name">Eternal Spinner</span>
+        <span class="specimen-tag">Loader</span>
+      </button>
+      <button class="specimen" aria-label="The Un-Undoable — destructive action pattern, coming soon">
+        <span class="specimen-num" aria-hidden="true">№ 003</span>
+        <div class="specimen-icon" aria-hidden="true">⎌</div>
+        <span class="specimen-name">The Un-Undoable</span>
+        <span class="specimen-tag">Destructive</span>
+      </button>
+      <button class="specimen" aria-label="Consent Trap — dark pattern, coming soon">
+        <span class="specimen-num" aria-hidden="true">№ 004</span>
+        <div class="specimen-icon" aria-hidden="true">☑</div>
+        <span class="specimen-name">Consent Trap</span>
+        <span class="specimen-tag">Dark Pattern</span>
+      </button>
+      <!-- Placeholder slots — aria-hidden, non-interactive -->
+      <div class="specimen coming-soon" aria-hidden="true"><span class="specimen-num">№ 005</span><div class="specimen-icon">·</div><span class="specimen-name">Coming soon</span></div>
+      <div class="specimen coming-soon" aria-hidden="true"><span class="specimen-num">№ 006</span><div class="specimen-icon">·</div><span class="specimen-name">Coming soon</span></div>
+      <div class="specimen coming-soon" aria-hidden="true"><span class="specimen-num">№ 007</span><div class="specimen-icon">·</div><span class="specimen-name">Coming soon</span></div>
+      <div class="specimen coming-soon" aria-hidden="true"><span class="specimen-num">№ 008</span><div class="specimen-icon">·</div><span class="specimen-name">Coming soon</span></div>
     </div>
     <div class="playground-cta">
-      <a href="playground.html" class="btn btn-primary" style="display:inline-flex;">▶ ENTER PLAYGROUND</a>
+      <a href="playground.html" class="btn btn-primary" style="display:inline-flex;">▶ Enter Playground</a>
     </div>
   </div>
 </div>
 
-<div class="pixel-divider"></div>
+<div class="pixel-divider" aria-hidden="true"></div>
 
 <!-- ABOUT -->
 <div class="section-bg-white" style="position:relative;z-index:1;">
   <div class="section-wrap" id="about">
     <div class="section-header">
-      <span class="section-badge">03 // PLAYER PROFILE</span>
-      <h2 class="section-title"><span style="color:#ff2d9b;-webkit-text-stroke:1.5px #0a0520;">About /</span> <span style="color:#ff2d9b;-webkit-text-stroke:1.5px #0a0520;">Résumé</span></h2>
+      <span class="section-badge" aria-hidden="true">03 // PLAYER PROFILE</span>
+      <h2 class="section-title"><span style="color:#ff2d9b;">About /</span> <span style="color:#ff2d9b;">Résumé</span></h2>
     </div>
     <div class="about-grid">
       <div class="about-card">
-        <div class="about-card-top"></div>
+        <div class="about-card-top" aria-hidden="true"></div>
         <div class="about-card-header">
           <span>PLAYER 1 // ID-001</span>
           <span>2026 ★★★</span>
         </div>
         <div class="about-portrait">
-          <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX ghost" style="width:140px;height:auto;filter:drop-shadow(3px 3px 0 #A122C0);" />
+          <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX mascot" style="width:140px;height:auto;filter:drop-shadow(3px 3px 0 #A122C0);" />
         </div>
         <div class="about-stats">
           <div class="stat-row"><span class="stat-label">Name</span><span class="stat-value">Stacy Tomasi</span></div>
           <div class="stat-row"><span class="stat-label">Location</span><span class="stat-value">San Jose, CA</span></div>
           <div class="stat-row"><span class="stat-label">Degree</span><span class="stat-value">MS UX · Kent State</span></div>
           <div class="stat-row"><span class="stat-label">Focus</span><span class="stat-value">Interaction Design</span></div>
-          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value open">● OPEN TO WORK</span></div>
+          <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value open">● Open to Work</span></div>
         </div>
       </div>
       <div class="about-content">
@@ -1251,25 +657,25 @@
         <p class="about-body"><span class="about-placeholder">[ Your IxD philosophy ]</span></p>
         <div class="contact-links">
           <a href="mailto:hello@tomiux.com" class="contact-link">✉ Email</a>
-          <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener" class="contact-link">↗ LinkedIn</a>
-          <a href="resume.pdf" target="_blank" rel="noopener" class="contact-link">↗ Download CV</a>
+          <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener" class="contact-link" aria-label="LinkedIn profile (opens in new tab)">↗ LinkedIn</a>
+          <a href="resume.pdf" target="_blank" rel="noopener" class="contact-link" aria-label="Download CV (opens in new tab)">↗ Download CV</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="pixel-divider"></div>
+<div class="pixel-divider" aria-hidden="true"></div>
 
 <!-- CONTACT -->
 <div class="section-bg-soft" style="position:relative;z-index:1;">
   <div class="section-wrap" id="contact">
     <div class="section-header">
-      <span class="section-badge">04 // EXTRA LIFE</span>
+      <span class="section-badge" aria-hidden="true">04 // EXTRA LIFE</span>
       <h2 class="section-title"><span class="accent">Get in</span> <span class="accent">Touch</span></h2>
     </div>
     <div class="contact-pod">
-      <div class="contact-signal"><span class="signal-dot"></span> READY PLAYER 2?</div>
+      <div class="contact-signal"><span class="signal-dot" aria-hidden="true"></span> Ready Player 2?</div>
       <h3 class="contact-headline">Let's make something<br/><span class="accent">worth noticing.</span></h3>
       <a href="mailto:hello@tomiux.com" class="contact-email">✉ hello@tomiux.com</a>
       <p class="contact-sub">Whether it's a project, a question, or just a good IxD debate — I'm here.</p>
@@ -1277,18 +683,69 @@
   </div>
 </div>
 
+</main>
+
 <footer>
   <div class="footer-brand">
-    <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="TomiUX" style="height:28px;width:auto;" />
+    <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="" aria-hidden="true" style="height:28px;width:auto;" />
     <span>© 2026 · STACY TOMASI<br/>TOMIUX · ALL RIGHTS RESERVED</span>
   </div>
-  <div class="footer-hits" title="you found it 👻" onclick="this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'" style="cursor:pointer;">SCORE: <span>∞</span></div>
+  <div class="footer-hits" tabindex="0" role="button" aria-label="Secret score counter" title="you found it 👻" id="footer-easter-egg">SCORE: <span>∞</span></div>
   <div class="footer-links">
     <a href="mailto:hello@tomiux.com">Email</a>
-    <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="resume.pdf" target="_blank" rel="noopener">CV</a>
+    <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener" aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+    <a href="resume.pdf" target="_blank" rel="noopener" aria-label="CV PDF (opens in new tab)">CV</a>
   </div>
 </footer>
+
+<script>
+  // ===== DROPDOWN KEYBOARD ACCESSIBILITY (WCAG 2.1.1) =====
+  const btn = document.getElementById('featured-menu-btn');
+  const menu = document.getElementById('featured-menu');
+  const menuItems = [...menu.querySelectorAll('[role="menuitem"]')];
+
+  function openMenu() {
+    menu.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    menuItems[0].focus();
+  }
+  function closeMenu() {
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.focus();
+  }
+
+  btn.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(); }
+  });
+  menu.addEventListener('keydown', (e) => {
+    const idx = menuItems.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); menuItems[(idx + 1) % menuItems.length].focus(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); menuItems[(idx - 1 + menuItems.length) % menuItems.length].focus(); }
+    if (e.key === 'Escape' || e.key === 'Tab') { closeMenu(); }
+  });
+  document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
+
+  // ===== EASTER EGG — keyboard handler (WCAG 2.1.1) =====
+  const egg = document.getElementById('footer-easter-egg');
+  function activateEgg() {
+    egg.setAttribute('data-found', 'true');
+    egg.innerHTML = '<span>🎮 KONAMI CODE ACCEPTED 🎮</span>';
+    egg.setAttribute('aria-label', 'Konami code accepted!');
+  }
+  egg.addEventListener('click', activateEgg);
+  egg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateEgg(); } });
+
+  // ===== SPECIMEN PLACEHOLDER INTERACTION =====
+  document.querySelectorAll('.specimen:not(.coming-soon)').forEach(card => {
+    card.addEventListener('click', () => {
+      // Routes to individual specimen pages when ready
+      const name = card.querySelector('.specimen-name').textContent;
+      console.log('Opening:', name);
+    });
+  });
+</script>
 
 </body>
 </html>
