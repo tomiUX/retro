@@ -54,7 +54,7 @@
     }
     #tomiux-nav .nav-links a:hover { background: #c8a8f0; color: #A122C0; }
     #tomiux-nav .nav-dropdown { position: relative; }
-    #tomiux-nav .nav-dropdown > a::after { content: ' \25BE'; font-size: 0.6rem; opacity: 0.7; }
+    #tomiux-nav .nav-dropdown > a::after { content: ' ▾'; font-size: 0.6rem; opacity: 0.7; }
     #tomiux-nav .dropdown-menu {
       display: none; position: absolute;
       top: calc(100% + 8px); left: 0;
@@ -115,7 +115,7 @@
     '    <li><a href="https://tomiux.com/playground.html">Playground</a></li>',
     '    <li><a href="https://tomiux.com/#about">About</a></li>',
     '    <li><a href="https://tomiux.com/#contact">Contact</a></li>',
-    '    <li><a href="https://tomiux.com/resume.pdf" class="nav-cv" target="_blank" rel="noopener">CV \u2197</a></li>',
+    '    <li><a href="https://tomiux.com/resume.pdf" class="nav-cv" target="_blank" rel="noopener">CV ↗</a></li>',
     '  </ul>',
     '</div>'
   ].join('\n');
