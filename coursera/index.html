@@ -1,1 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coursera Cognitive Accessibility Audit // TomiUX 🧠</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lavender-bg: #f0e8ff;
+    --lavender-mid: #c8a8f0;
+    --lavender-dark: #9b70d8;
+    --pink: #ff6eb4;
+    --hot-pink: #ff2d9b;
+    --baby-pink: #ffb3d9;
+    --teal: #3FBB9E;
+    --mint: #91EBD3;
+    --yellow: #ffe566;
+    --orange: #ff8c42;
+    --blue: #6bb8ff;
+    --baby-blue: #b3d9ff;
+    --purple: #A122C0;
+    --lime: #c8ff6b;
+    --red: #ff5252;
+    --white: #ffffff;
+    --offwhite: #fdf8ff;
+    --text: #1a0a3e;
+    --text-mid: #4a1878;
+    --text-light: #8850b0;
+    --pixel-dark: #0a0520;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--lavender-bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.10;
+    background-image:
+      radial-gradient(3px 3px at 12% 8%, var(--blue), transparent),
+      radial-gradient(2px 2px at 28% 22%, var(--teal), transparent),
+      radial-gradient(3px 3px at 45% 5%, var(--yellow), transparent),
+      radial-gradient(2px 2px at 62% 18%, var(--purple), transparent),
+      radial-gradient(3px 3px at 78% 10%, var(--orange), transparent),
+      radial-gradient(2px 2px at 92% 25%, var(--teal), transparent),
+      radial-gradient(3px 3px at 15% 45%, var(--yellow), transparent),
+      radial-gradient(2px 2px at 35% 60%, var(--pink), transparent),
+      radial-gradient(3px 3px at 55% 55%, var(--blue), transparent),
+      radial-gradient(2px 2px at 72% 48%, var(--lime), transparent),
+      radial-gradient(3px 3px at 88% 65%, var(--hot-pink), transparent),
+      radial-gradient(2px 2px at 8% 78%, var(--teal), transparent),
+      radial-gradient(3px 3px at 25% 88%, var(--purple), transparent),
+      radial-gradient(2px 2px at 48% 80%, var(--orange), transparent);
+    background-size: 300px 300px;
+    animation: bgShimmer 8s ease-in-out infinite alternate;
+  }
+  @keyframes bgShimmer { 0% { opacity: 0.06; } 100% { opacity: 0.16; } }
+
+  .pixel-divider {
+    height: 12px;
+    background: repeating-linear-gradient(90deg,
+      #3FBB9E 0px, #3FBB9E 20px, #ff6eb4 20px, #ff6eb4 40px,
+      #A122C0 40px, #A122C0 60px, #ffe566 60px, #ffe566 80px,
+      #91EBD3 80px, #91EBD3 100px, #ff8c42 100px, #ff8c42 120px,
+      #3FBB9E 120px, #3FBB9E 140px);
+    border-top: 3px solid var(--pixel-dark);
+    border-bottom: 3px solid var(--pixel-dark);
+    position: relative; z-index: 1;
+  }
+
+  .section-bg-white { background: var(--white); position: relative; z-index: 1; }
+  .section-bg-soft {
+    background:
+      radial-gradient(ellipse at 0% 50%, rgba(107,184,255,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 100% 50%, rgba(63,187,158,0.15) 0%, transparent 60%),
+      var(--lavender-bg);
+    position: relative; z-index: 1;
+  }
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; position: relative; z-index: 1; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .section-badge {
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    padding: 0.4rem 0.75rem; background: var(--yellow);
+    border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark);
+    color: var(--pixel-dark); letter-spacing: 0.05em; white-space: nowrap;
+  }
+  .section-title {
+    font-family: 'Lilita One', sans-serif; font-size: clamp(2rem, 4.5vw, 3.2rem);
+    color: var(--purple); flex: 1; line-height: 1;
+    -webkit-text-stroke: 1.5px var(--text-mid);
+  }
+  .section-title .accent  { color: var(--purple); }
+  .section-title .accent2 { color: var(--hot-pink); }
+  .section-title .accent3 { color: var(--teal); }
+
+  /* HERO */
+  .case-hero {
+    position: relative; z-index: 1;
+    background:
+      radial-gradient(ellipse at 0% 60%, rgba(107,184,255,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 20%, rgba(161,34,192,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(63,187,158,0.15) 0%, transparent 50%),
+      var(--lavender-bg);
+    border-bottom: 4px solid var(--pixel-dark);
+    padding: 5rem 2rem 4rem;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  @media (max-width: 768px) { .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+  .hero-eyebrow {
+    display: inline-block; margin-bottom: 1.2rem;
+    font-family: 'Press Start 2P', monospace; font-size: 0.56rem;
+    padding: 0.4rem 0.8rem; background: var(--blue);
+    border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark);
+    color: var(--white); letter-spacing: 0.08em;
+  }
+  .hero-title {
+    font-family: 'Lilita One', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.8rem);
+    line-height: 0.95; margin-bottom: 1.2rem;
+  }
+  .hero-title .line1 {
+    display: block; color: var(--blue);
+    -webkit-text-stroke: 2px var(--pixel-dark);
+    text-shadow: 4px 4px 0 rgba(107,184,255,0.3);
+  }
+  .hero-title .line2 {
+    display: block; color: var(--purple);
+    -webkit-text-stroke: 2px var(--pixel-dark);
+    text-shadow: 4px 4px 0 rgba(161,34,192,0.25);
+  }
+  .hero-sub {
+    font-size: 1.1rem; font-weight: 700; color: var(--text-mid);
+    margin-bottom: 2rem; line-height: 1.6; max-width: 480px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0; }
+  .hero-tag {
+    font-family: 'Press Start 2P', monospace; font-size: 0.46rem;
+    padding: 0.35rem 0.65rem; border: 2px solid var(--pixel-dark);
+    background: var(--white); color: var(--text-mid);
+    letter-spacing: 0.05em; line-height: 1.8;
+  }
+
+  /* Back button */
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.7rem 1.4rem; border-radius: 8px; text-decoration: none;
+    background: var(--purple); color: white;
+    border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
+    transition: all 0.12s;
+  }
+  .btn-back:hover { background: var(--hot-pink); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
+
+  /* Scorecard */
+  .hero-scorecard {
+    background: var(--white);
+    border: 4px solid var(--pixel-dark); box-shadow: 6px 6px 0 var(--pixel-dark);
+    border-radius: 4px; overflow: hidden;
+  }
+  .scorecard-header {
+    background: var(--pixel-dark); padding: 0.75rem 1.25rem;
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    color: var(--yellow); letter-spacing: 0.06em;
+  }
+  .scorecard-body { padding: 1.5rem 1.25rem; }
+  .scorecard-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0; border-bottom: 2px dashed var(--lavender-mid); gap: 1rem;
+  }
+  .scorecard-row:last-child { border-bottom: none; }
+  .scorecard-label { font-size: 0.8rem; font-weight: 700; color: var(--text-mid); }
+  .scorecard-val {
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    color: var(--text); letter-spacing: 0.04em; text-align: right;
+  }
+
+  /* Framework cards */
+  .framework-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+  }
+  .framework-card {
+    background: var(--white);
+    border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
+    border-radius: 4px; overflow: hidden;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .framework-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
+  .framework-card-head {
+    padding: 0.6rem 1rem;
+    font-family: 'Press Start 2P', monospace; font-size: 0.50rem;
+    color: var(--white); letter-spacing: 0.05em;
+  }
+  .fh-focus      { background: var(--purple); }
+  .fh-error      { background: var(--teal); color: var(--pixel-dark) !important; }
+  .fh-visual     { background: var(--blue); }
+  .fh-understand { background: var(--orange); }
+  .fh-find       { background: var(--hot-pink); }
+  .fh-clarity    { background: var(--pixel-dark); }
+  .framework-card-body { padding: 1.1rem 1rem 1.2rem; }
+  .fw-def {
+    font-size: 0.78rem; font-style: italic; color: var(--text-light);
+    line-height: 1.5; margin-bottom: 0.75rem;
+    border-left: 3px solid var(--lavender-mid); padding-left: 0.75rem;
+  }
+  .fw-findings { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .fw-item { display: flex; gap: 0.6rem; align-items: flex-start; }
+  /* Larger, readable pills using Nunito instead of pixel font */
+  .fw-pill {
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.65rem;
+    padding: 0.18rem 0.55rem; border: 2px solid var(--pixel-dark);
+    white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    letter-spacing: 0.03em; border-radius: 3px;
+  }
+  .pill-strength { background: var(--mint); color: var(--pixel-dark); }
+  .pill-s3 { background: var(--yellow); color: var(--pixel-dark); }
+  .pill-s4 { background: var(--red); color: var(--white); }
+  .fw-item-text { font-size: 0.8rem; font-weight: 600; color: var(--text); line-height: 1.45; }
+
+  /* Terms band */
+  .terms-band { background: var(--pixel-dark); padding: 3.5rem 2rem; position: relative; z-index: 1; }
+  .terms-inner { max-width: 1100px; margin: 0 auto; }
+  .terms-label {
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    color: var(--yellow); letter-spacing: 0.1em; margin-bottom: 1.75rem;
+  }
+  .terms-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;
+  }
+  .term-card {
+    background: rgba(255,255,255,0.07); border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 4px; padding: 1.25rem 1.1rem; transition: background 0.15s;
+  }
+  .term-card:hover { background: rgba(255,255,255,0.12); }
+  .term-name {
+    font-family: 'Lilita One', sans-serif; font-size: 1.4rem;
+    color: var(--yellow); margin-bottom: 0.4rem; line-height: 1;
+  }
+  .term-def { font-size: 0.82rem; color: rgba(255,255,255,0.82); line-height: 1.55; }
+
+  /* Stat row */
+  .stat-row {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 3.5rem;
+  }
+  .stat-cell {
+    background: var(--white);
+    border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
+    padding: 1.25rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+    min-width: 160px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Lilita One', sans-serif; font-size: 3rem;
+    color: var(--purple); line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Press Start 2P', monospace; font-size: 0.46rem;
+    color: var(--text-mid); letter-spacing: 0.06em; line-height: 1.8; text-align: center;
+  }
+
+  /* Platform panels */
+  .platform-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 700px) { .platform-split { grid-template-columns: 1fr; } }
+  .platform-panel {
+    border: 3px solid var(--pixel-dark); box-shadow: 5px 5px 0 var(--pixel-dark);
+    border-radius: 4px; overflow: hidden;
+  }
+  .platform-head {
+    padding: 0.8rem 1.25rem; display: flex; gap: 0.75rem; align-items: center;
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem; color: var(--white);
+    letter-spacing: 0.06em;
+  }
+  .ph-web { background: var(--purple); }
+  .ph-mobile { background: var(--teal); color: var(--pixel-dark) !important; }
+  .platform-body { background: var(--white); padding: 1.25rem; }
+  .platform-finding {
+    display: flex; gap: 0.65rem; align-items: flex-start;
+    padding: 0.6rem 0; border-bottom: 1.5px dashed var(--lavender-mid);
+  }
+  .platform-finding:last-child { border-bottom: none; }
+  /* Larger, bolder, more readable severity badges */
+  .pf-badge {
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.72rem;
+    padding: 0.22rem 0.55rem; border: 2px solid var(--pixel-dark);
+    flex-shrink: 0; margin-top: 2px; letter-spacing: 0.04em;
+    border-radius: 3px; min-width: 2.4rem; text-align: center;
+  }
+  .pf-s1 { background: var(--mint); color: var(--pixel-dark); }
+  .pf-s3 { background: var(--yellow); color: var(--pixel-dark); }
+  .pf-s4 { background: var(--red); color: var(--white); }
+  .pf-text { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .pf-title { font-weight: 800; color: var(--text-mid); }
+
+  /* Recs */
+  .recs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+  }
+  .rec-card {
+    background: var(--white);
+    border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
+    border-radius: 4px; padding: 1.5rem 1.25rem;
+    transition: transform 0.12s, box-shadow 0.12s;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .rec-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
+  .rec-number {
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    color: var(--purple); letter-spacing: 0.06em;
+  }
+  .rec-title { font-family: 'Lilita One', sans-serif; font-size: 1.25rem; color: var(--text); line-height: 1.1; }
+  .rec-body { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; font-weight: 600; }
+
+  /* Takeaway */
+  .takeaway {
+    background: var(--pixel-dark);
+    border: 4px solid var(--pixel-dark); box-shadow: 6px 6px 0 var(--lavender-dark);
+    border-radius: 4px; padding: 2.5rem 2rem; margin-top: 3rem; position: relative;
+  }
+  .takeaway::before {
+    content: '"';
+    font-family: 'Lilita One', sans-serif; font-size: 8rem; line-height: 1;
+    color: var(--yellow); opacity: 0.2;
+    position: absolute; top: -1rem; left: 1.5rem;
+  }
+  .takeaway-text {
+    font-family: 'Lilita One', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--white); line-height: 1.45; margin-bottom: 1rem; position: relative;
+  }
+  .takeaway-attr {
+    font-family: 'Press Start 2P', monospace; font-size: 0.50rem;
+    color: var(--yellow); letter-spacing: 0.05em; position: relative;
+  }
+
+  /* Body copy */
+  .body-text {
+    font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.7;
+    margin-bottom: 1rem; max-width: 68ch;
+  }
+  .pull-quote {
+    font-family: 'Lilita One', sans-serif; font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    color: var(--purple); line-height: 1.3; margin-bottom: 1.25rem;
+    -webkit-text-stroke: 1px var(--text-mid);
+  }
+  .sub-label {
+    font-family: 'Press Start 2P', monospace; font-size: 0.50rem;
+    color: var(--text-light); letter-spacing: 0.08em; margin-bottom: 0.85rem;
+  }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  @media (max-width: 700px) { .problem-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .insight-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .insight-list li {
+    font-size: 0.85rem; font-weight: 700; color: var(--text);
+    padding: 0.5rem 0.75rem; background: var(--lavender-bg);
+    border-left: 4px solid var(--blue); border-bottom: 2px solid var(--lavender-mid);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--pixel-dark); color: rgba(255,255,255,0.6);
+    border-top: 4px solid var(--lavender-dark);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem; padding: 1.5rem 2rem; position: relative; z-index: 1;
+  }
+  .footer-brand { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
+  .footer-links { display: flex; gap: 1.25rem; }
+  .footer-links a { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: var(--yellow); text-decoration: none; letter-spacing: 0.05em; transition: color 0.12s; }
+  .footer-links a:hover { color: var(--pink); }
+  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: rgba(255,255,255,0.25); cursor: pointer; letter-spacing: 0.06em; }
+  .footer-hits[data-found='true'] { color: var(--yellow); }
+</style>
+</head>
+<body>
+
+<script src="https://tomiux.com/assets/nav.js" defer></script>
+
+<!-- HERO -->
+<section class="case-hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-eyebrow">COGNITIVE AUDIT · 2026</span>
+      <h1 class="hero-title">
+        <span class="line1">Coursera</span>
+        <span class="line2">Cognitive Audit</span>
+      </h1>
+      <p class="hero-sub">How much mental energy does a learner on Coursera spend before they learn anything? A heuristic evaluation of the web and iOS platforms through the lens of cognitive accessibility.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Nielsen's Heuristics</span>
+        <span class="hero-tag">Cognitive Load</span>
+        <span class="hero-tag">Web + iOS</span>
+        <span class="hero-tag">March 2026</span>
+      </div>
+    </div>
+    <div class="hero-scorecard">
+      <div class="scorecard-header">// AUDIT AT A GLANCE</div>
+      <div class="scorecard-body">
+        <div class="scorecard-row">
+          <span class="scorecard-label">Platform</span>
+          <span class="scorecard-val">Web + iOS App</span>
+        </div>
+        <div class="scorecard-row">
+          <span class="scorecard-label">Framework</span>
+          <span class="scorecard-val">Nielsen (6 of 10)</span>
+        </div>
+        <div class="scorecard-row">
+          <span class="scorecard-label">Severity Scale</span>
+          <span class="scorecard-val">1 (None) → 4 (Critical)</span>
+        </div>
+        <div class="scorecard-row">
+          <span class="scorecard-label">Findings</span>
+          <span class="scorecard-val">12 (6 web · 6 mobile)</span>
+        </div>
+        <div class="scorecard-row">
+          <span class="scorecard-label">Highest Severity</span>
+          <span class="scorecard-val" style="color:var(--red);">Score 4 — 7 Issues</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- THE QUESTION -->
+<div class="section-bg-white">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-badge">01 // THE QUESTION</span>
+      <h2 class="section-title">Every learner has a <span class="accent2">cognitive budget</span></h2>
+    </div>
+    <div class="problem-grid">
+      <div>
+        <p class="pull-quote">Cognitive accessibility isn't measured by what's there. It's measured by what isn't.</p>
+        <p class="body-text">Every click, pop-up, confusing icon, and inconsistent metric taxes a learner's limited mental energy. Energy that should be reserved for actually learning. This audit examined Coursera's web and mobile platforms to identify where the interface depletes that budget before a student reaches the material.</p>
+        <p class="body-text">Using 6 of Nielsen's 10 Usability Heuristics as the evaluation lens (Focus, Error Prevention, Visual Comprehension, Understanding, Findability, and Clarity), I mapped each finding to a 1–4 severity scale, grounded in real, personal usage of the Google UX Design Certificate.</p>
+      </div>
+      <div>
+        <p class="sub-label">// WHY THESE 6 HEURISTICS</p>
+        <ul class="insight-list">
+          <li>They represent the critical path of a learner from login to lesson</li>
+          <li>All 6 directly target cognitive budget and how much mental energy is available for learning</li>
+          <li>A seamless experience rarely generates data; friction causes abandonment that does</li>
+          <li>The 1–4 severity scale moves evaluation from subjective opinion to measurable barrier level</li>
+          <li>Personal, extended usage of the platform gave real-world context no lab session can replicate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<!-- ORIGINAL TERMINOLOGY -->
+<div class="terms-band">
+  <div class="terms-inner">
+    <p class="terms-label">// ORIGINAL TERMINOLOGY COINED IN THIS AUDIT</p>
+    <div class="terms-grid">
+      <div class="term-card">
+        <p class="term-name">Cognitive Budget</p>
+        <p class="term-def">The finite mental energy a learner has available per session. Every unnecessary interaction withdraws from it before a single piece of material is consumed.</p>
+      </div>
+      <div class="term-card">
+        <p class="term-name">Search Tax</p>
+        <p class="term-def">The cognitive cost incurred when disorganized information architecture forces a user to hunt for something that should be immediately findable.</p>
+      </div>
+      <div class="term-card">
+        <p class="term-name">Interaction Tax</p>
+        <p class="term-def">Mandatory friction that must be "paid" before a user can access the thing they came to do. A 4-click goal-setting flow on every return visit is a textbook Interaction Tax.</p>
+      </div>
+      <div class="term-card">
+        <p class="term-name">Memory Tax</p>
+        <p class="term-def">The load imposed when a user must memorize unlabeled icons or abstract symbols instead of recognizing them. Clear text labels under navigation icons eliminate it entirely.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<!-- SEVERITY OVERVIEW -->
+<div class="section-bg-soft">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-badge">02 // SEVERITY OVERVIEW</span>
+      <h2 class="section-title">Counting the <span class="accent">cost</span></h2>
+    </div>
+    <div class="stat-row">
+      <div class="stat-cell">
+        <span class="stat-num" style="color:var(--teal);">6</span>
+        <span class="stat-label">SCORE 1<br/>NO CONCERN</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" style="color:var(--blue);">0</span>
+        <span class="stat-label">SCORE 2<br/>MINIMAL</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" style="color:var(--orange);">5</span>
+        <span class="stat-label">SCORE 3<br/>SIGNIFICANT</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num" style="color:var(--red);">7</span>
+        <span class="stat-label">SCORE 4<br/>CRITICAL</span>
+      </div>
+    </div>
+    <p class="body-text" style="text-align:center; margin: 0 auto;">Of the 18 findings across both platforms, 7 hit Score 4 — total barriers requiring immediate attention to prevent learner abandonment. All 7 are on mobile.</p>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<!-- FINDINGS BY PLATFORM -->
+<div class="section-bg-white">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-badge">03 // FINDINGS BY PLATFORM</span>
+      <h2 class="section-title">Web vs. <span class="accent3">Mobile</span></h2>
+    </div>
+    <div class="platform-split">
+
+      <div class="platform-panel">
+        <div class="platform-head ph-web">🖥&nbsp; WEBSITE</div>
+        <div class="platform-body">
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Theater Mode</span> Centers video, darkens background, syncs highlighted transcript. Removes peripheral distraction beautifully.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s3">S3</span>
+            <div class="pf-text"><span class="pf-title">Commitment Modal</span> Mandatory pop-up forces returning users through a "My Commitment" flow before re-entering a session in progress.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Pre-Assessment Prep</span> "Review Learning Objectives" and AI Coach access before graded challenges reduce anxiety and prime memory.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s3">S3</span>
+            <div class="pf-text"><span class="pf-title">Save Note</span> Lacks button border or high-contrast background. A primary feature that is functionally invisible due to poor visual affordance.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">White Space</span> Layout is clean and uncluttered, minimizing sensory overload for users reviewing completed work.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s3">S3</span>
+            <div class="pf-text"><span class="pf-title">Buried Portfolio Project</span> Hiding a key milestone inside a collapsed module breaks the user's mental map. A direct Search Tax.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Granular Lesson Metadata</span> Every module shows title, delivery method, and time estimate. Lets users budget their cognitive energy proactively.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s3">S3</span>
+            <div class="pf-text"><span class="pf-title">Non-Standard Theater Mode Icon</span> No universal meaning, no persistent tooltip. Its immersive functionality remains hidden from most users.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">"My Learning" Hub + Logo Nav</span> Centralized landing page and predictable logo "Home" button provide dual orientation safety nets.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s3">S3</span>
+            <div class="pf-text"><span class="pf-title">Link Anxiety (Coach)</span> Unclear if clicking "Coach" navigates away from the current lesson. Creates hesitation and lost-progress fear.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Personalized Goal Reflection</span> "Your career goal is…" uses the user's own established context to orient and motivate immediately.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Deceptive Styling — Titles</span> A title in the left pane looks like static branding but triggers a full page navigation. A visual-function lie.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-panel">
+        <div class="platform-head ph-mobile">📱&nbsp; iOS APP</div>
+        <div class="platform-body">
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Labeled Bottom Nav</span> Learn, Explore, and Profile labels eliminate the Memory Tax. Users recognize words, not abstract symbols.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Mandatory 4-Click Goal Flow</span> A forced commitment/goal-setting sequence on every return visit. An Interaction Tax paid before any learning begins.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Confirmation Prompts</span> Standard "Are you sure?" dialogs prevent accidental quiz exits and data loss.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Progress Confusion</span> 76% in one view, 45% in another, with different branding from the web. Forces Mental Math™ and causes planning errors around deadlines.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Explore Mode Vertical Scroll</span> A predictable scrolling feed for content discovery reduces spatial processing load.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Hidden Navigation</span> The top menu cuts off with no fading edge cue, hiding essential tabs behind an undiscoverable swipe gesture.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Search FAB</span> Floating action button returns the user to their exact previous location after interruptions. Strong interruption resilience.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Certificate Dead-End</span> No native way to view a certificate. The "Share" icon forces a jump to an external browser, breaking user flow and mental model.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s1">S1</span>
+            <div class="pf-text"><span class="pf-title">Time Estimates</span> Duration labels ("10 min") allow users with executive function challenges to plan sessions against their available mental energy.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Lack of Hierarchical Context</span> Individual lesson views don't show where the current task fits in the larger structure. Reorientation after interruption is genuinely hard.</div>
+          </div>
+          <div class="platform-finding">
+            <span class="pf-badge pf-s4">S4</span>
+            <div class="pf-text"><span class="pf-title">Spontaneous Language Glitch</span> Content and buttons spontaneously switch to an unrelated language. Destroys system trust. Makes the app unusable for affected users.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<!-- BY HEURISTIC -->
+<div class="section-bg-soft">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-badge">04 // BY HEURISTIC CATEGORY</span>
+      <h2 class="section-title">Six lenses, <span class="accent">one learner</span></h2>
+    </div>
+    <div class="framework-grid">
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-focus">HELP USERS FOCUS</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Immersive features protect attention by removing peripheral UI noise. Unnecessary interruptions deplete the cognitive budget before learning begins.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">Theater Mode removes distractions, a cognitive accessibility best practice</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s3">WEB S3</span><span class="fw-item-text">Commitment Modal creates interaction fatigue for every returning user</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">4-Click Interaction Tax paid on every return before any session can begin</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-error">HELP USERS AVOID MISTAKES</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Visual affordances make interactive elements obvious. If "Save Note" looks like plain text, the system fails to guide users to the feature.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">Pre-Assessment Prep with AI Coach reduces testing anxiety and primes memory</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s3">WEB S3</span><span class="fw-item-text">Save Note is invisible with no button border or high-contrast background</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">Conflicting progress percentages across views force Mental Math and planning errors</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-visual">VISUAL COMPREHENSION</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Disorganized information architecture increases the Search Tax, the cognitive cost of hunting for something that should be immediately visible.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">Generous white space minimizes sensory overload when reviewing completed work</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s3">WEB S3</span><span class="fw-item-text">Portfolio Project buried inside a collapsed module breaks the user's mental map</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">Hidden nav bar with no fading-edge cue conceals essential tabs from most users</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-understand">UNDERSTANDING</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Non-standard icons without tooltips create a Cognitive Gap the user must bridge alone, spending budget before any learning can happen.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">Lesson metadata (title, type, time) lets users budget their cognitive energy proactively</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s3">WEB S3</span><span class="fw-item-text">Theater Mode icon has no universal meaning and its best feature stays hidden</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">Certificate Dead-End forces users to an external browser to view their own certificate</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-find">FINDABILITY</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Orientation safety nets ensure users navigating complex structures can always return to a known starting point after an interruption.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">"My Learning" Hub and logo navigation act as dual orientation safety nets</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s3">WEB S3</span><span class="fw-item-text">Link Anxiety causes users to hesitate clicking "Coach" for fear of losing progress</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">No hierarchical context — lessons don't show where they sit in the larger structure</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="framework-card">
+        <div class="framework-card-head fh-clarity">CLARITY</div>
+        <div class="framework-card-body">
+          <p class="fw-def">Design elements should not contradict their function. A clickable title styled like static branding is an interface that lies to the user.</p>
+          <ul class="fw-findings">
+            <li class="fw-item"><span class="fw-pill pill-strength">WEB S1</span><span class="fw-item-text">Personalized goal reflection orients users with their own established context</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">WEB S4</span><span class="fw-item-text">Title styled as branding looks static but triggers a disorienting full-page navigation</span></li>
+            <li class="fw-item"><span class="fw-pill pill-s4">MOB S4</span><span class="fw-item-text">Spontaneous language glitch switches content language without warning</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<!-- RECOMMENDATIONS -->
+<div class="section-bg-white">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-badge">05 // RECOMMENDATIONS</span>
+      <h2 class="section-title">Making the system <span class="accent2">invisible</span></h2>
+    </div>
+    <div class="recs-grid">
+      <div class="rec-card">
+        <p class="rec-number">REC 01</p>
+        <p class="rec-title">Sync the Data</p>
+        <p class="rec-body">Align progress metrics and branding across web and mobile. A single source of truth eliminates the Mental Math users are currently forced to perform and the anxiety that comes with it.</p>
+      </div>
+      <div class="rec-card">
+        <p class="rec-number">REC 02</p>
+        <p class="rec-title">Add Visual Cues for Off-Screen Content</p>
+        <p class="rec-body">Add a fading edge or partial tab visibility indicator to the mobile top nav. Right now users have no reason to know those tabs exist, let alone swipe for them.</p>
+      </div>
+      <div class="rec-card">
+        <p class="rec-number">REC 03</p>
+        <p class="rec-title">Fix the Affordances</p>
+        <p class="rec-body">Give "Save Note" a proper button border. Add underlines to linked titles. Clear visual affordances eliminate both the invisible web controls and the tappability ambiguity on mobile.</p>
+      </div>
+      <div class="rec-card">
+        <p class="rec-number">REC 04</p>
+        <p class="rec-title">Native Certificate View</p>
+        <p class="rec-body">Replace the "Share" workaround with a dedicated "View Certificate" button that opens natively inside the app. Earning a credential is the primary reward and it shouldn't require a scavenger hunt.</p>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <p class="takeaway-text">The goal is to make the system invisible. When the interface disappears, the learner's full cognitive budget is available for the one thing they came to do — actually learn.</p>
+      <p class="takeaway-attr">Stacy Tomasi, Accessibility Audit, March 2026</p>
+    </div>
+
+    <div style="text-align:center; margin-top: 3rem;">
+      <a href="https://tomiux.com/#work" class="btn-back">← Back to Featured Work</a>
+    </div>
+  </div>
+</div>
+
+<div class="pixel-divider"></div>
+
+<footer>
+  <div class="footer-brand">© 2026 · STACY TOMASI · TOMIUX · ALL RIGHTS RESERVED</div>
+  <div class="footer-hits" title="you found it 👻" onclick="this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'">SCORE: <span>∞</span></div>
+  <div class="footer-links">
+    <a href="mailto:stacy.tomasi@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://tomiux.com/#work">← Work</a>
+  </div>
+</footer>
+
+</body>
+</html>
