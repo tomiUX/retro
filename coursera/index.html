@@ -32,6 +32,18 @@
     --pixel-dark: #0a0520;
   }
 
+
+  /* ===== SKIP LINK ===== */
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem;
+    background: var(--pixel-dark); color: var(--yellow);
+    font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
+    padding: 0.6rem 1rem; text-decoration: none; z-index: 9999;
+    border: 3px solid var(--yellow);
+    transition: top 0.1s;
+  }
+  .skip-link:focus { top: 1rem; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
@@ -64,6 +76,19 @@
     animation: bgShimmer 8s ease-in-out infinite alternate;
   }
   @keyframes bgShimmer { 0% { opacity: 0.06; } 100% { opacity: 0.16; } }
+
+
+  /* ===== FOCUS STYLES (WCAG 2.4.7) ===== */
+  :focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--pixel-dark);
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--pixel-dark);
+  }
 
   .pixel-divider {
     height: 12px;
@@ -147,7 +172,7 @@
   }
   .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0; }
   .hero-tag {
-    font-family: 'Press Start 2P', monospace; font-size: 0.46rem;
+    font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
     padding: 0.35rem 0.65rem; border: 2px solid var(--pixel-dark);
     background: var(--white); color: var(--text-mid);
     letter-spacing: 0.05em; line-height: 1.8;
@@ -163,7 +188,7 @@
     border: 3px solid var(--pixel-dark); box-shadow: 4px 4px 0 var(--pixel-dark);
     transition: all 0.12s;
   }
-  .btn-back:hover { background: var(--hot-pink); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
+  .btn-back:hover { background: var(--hot-pink); color: var(--pixel-dark); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
 
   /* Scorecard */
   .hero-scorecard {
@@ -227,7 +252,7 @@
   }
   .pill-strength { background: var(--mint); color: var(--pixel-dark); }
   .pill-s3 { background: var(--yellow); color: var(--pixel-dark); }
-  .pill-s4 { background: var(--red); color: var(--white); }
+  .pill-s4 { background: #b42020; color: var(--white); }
   .fw-item-text { font-size: 0.8rem; font-weight: 600; color: var(--text); line-height: 1.45; }
 
   /* Terms band */
@@ -266,7 +291,7 @@
     color: var(--purple); line-height: 1;
   }
   .stat-label {
-    font-family: 'Press Start 2P', monospace; font-size: 0.46rem;
+    font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
     color: var(--text-mid); letter-spacing: 0.06em; line-height: 1.8; text-align: center;
   }
 
@@ -283,7 +308,7 @@
     letter-spacing: 0.06em;
   }
   .ph-web { background: var(--purple); }
-  .ph-mobile { background: var(--teal); color: var(--pixel-dark) !important; }
+  .ph-mobile { background: #008268; color: var(--white) !important; }
   .platform-body { background: var(--white); padding: 1.25rem; }
   .platform-finding {
     display: flex; gap: 0.65rem; align-items: flex-start;
@@ -299,7 +324,7 @@
   }
   .pf-s1 { background: var(--mint); color: var(--pixel-dark); }
   .pf-s3 { background: var(--yellow); color: var(--pixel-dark); }
-  .pf-s4 { background: var(--red); color: var(--white); }
+  .pf-s4 { background: #b42020; color: var(--white); }
   .pf-text { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.4; }
   .pf-title { font-weight: 800; color: var(--text-mid); }
 
@@ -374,20 +399,31 @@
     display: flex; justify-content: space-between; align-items: center;
     flex-wrap: wrap; gap: 1rem; padding: 1.5rem 2rem; position: relative; z-index: 1;
   }
-  .footer-brand { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
+  .footer-brand { font-family: 'Press Start 2P', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
   .footer-links { display: flex; gap: 1.25rem; }
-  .footer-links a { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: var(--yellow); text-decoration: none; letter-spacing: 0.05em; transition: color 0.12s; }
+  .footer-links a { font-family: 'Press Start 2P', monospace; font-size: 0.6rem; color: var(--yellow); text-decoration: none; letter-spacing: 0.05em; transition: color 0.12s; }
   .footer-links a:hover { color: var(--pink); }
-  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.48rem; color: rgba(255,255,255,0.25); cursor: pointer; letter-spacing: 0.06em; }
+  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.6rem; color: rgba(255,255,255,0.25); cursor: pointer; letter-spacing: 0.06em; }
   .footer-hits[data-found='true'] { color: var(--yellow); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    body::before { animation: none; opacity: 0.08; }
+  }
+
 </style>
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <script src="https://tomiux.com/assets/nav.js" defer></script>
 
 <!-- HERO -->
-<section class="case-hero">
+<section class="case-hero" id="main-content">
   <div class="hero-inner">
     <div>
       <span class="hero-eyebrow">COGNITIVE AUDIT · 2026</span>
@@ -762,7 +798,7 @@
     </div>
 
     <div style="text-align:center; margin-top: 3rem;">
-      <a href="https://tomiux.com/#work" class="btn-back">← Back to Featured Work</a>
+      <a href="https://tomiux.com/#work" class="btn-back" aria-label="Back to Featured Work">← Back to Featured Work</a>
     </div>
   </div>
 </div>
@@ -771,7 +807,9 @@
 
 <footer>
   <div class="footer-brand">© 2026 · STACY TOMASI · TOMIUX · ALL RIGHTS RESERVED</div>
-  <div class="footer-hits" title="you found it 👻" onclick="this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'">SCORE: <span>∞</span></div>
+  <div class="footer-hits" role="button" tabindex="0" title="you found it 👻" aria-label="Easter egg button"
+    onclick="this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'"
+    onkeydown="if(event.key==='Enter'||event.key===' '){this.setAttribute('data-found','true'); this.innerHTML='<span>🎮 KONAMI CODE ACCEPTED 🎮</span>'}">SCORE: <span aria-hidden="true">∞</span></div>
   <div class="footer-links">
     <a href="mailto:stacy.tomasi@gmail.com">Email</a>
     <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener">LinkedIn</a>
