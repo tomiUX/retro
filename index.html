@@ -14,6 +14,7 @@
     --lavender-dark: #9b70d8;
     --pink: #ff6eb4;
     --hot-pink: #ff2d9b;
+    --hot-pink-deep: #b8167d; /* WCAG AA on light lavender bg (4.5:1+) for small text */
     --baby-pink: #ffb3d9;
     --teal: #3FBB9E;
     --mint: #91EBD3;
@@ -156,10 +157,19 @@
     display: none; position: absolute; top: calc(100% + 8px); left: 0;
     background: rgba(253,248,255,0.98); border: 3px solid var(--pixel-dark);
     box-shadow: 4px 4px 0 var(--pixel-dark); border-radius: 8px;
-    min-width: 200px; z-index: 200; overflow: hidden;
+    min-width: 200px; z-index: 200; overflow: visible;
+  }
+  /* Invisible bridge over the 8px gap so hover doesn't break when the cursor
+     travels from the trigger button down into the menu items. The menu used to
+     close mid-traverse — now the bridge keeps :hover alive across the gap. */
+  .dropdown-menu::before {
+    content: ''; position: absolute; left: 0; right: 0;
+    top: -10px; height: 10px; background: transparent;
   }
   .dropdown-menu.open { display: block; }
-  .nav-dropdown:hover .dropdown-menu { display: block; }
+  /* Open on hover OR keyboard focus anywhere in the dropdown wrapper */
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu { display: block; }
 
   .dropdown-menu a {
     display: flex; align-items: center; gap: 0.5rem;
@@ -217,12 +227,25 @@
     font-family: 'Unbounded', sans-serif; font-weight: 900;
     font-size: clamp(3rem, 7.5vw, 5.5rem); line-height: 0.95;
     margin-bottom: 1rem; letter-spacing: -0.02em;
+    /* Stroke around large display text — paint-order keeps the fill on top of the stroke */
+    -webkit-text-stroke: 2px var(--pixel-dark);
+    paint-order: stroke fill;
   }
   .hero-name .line1 { display: block; color: var(--purple); text-shadow: 4px 4px 0 rgba(161,34,192,0.3), 8px 8px 0 rgba(161,34,192,0.15); }
   .hero-name .line2 { display: block; color: var(--teal); text-shadow: 4px 4px 0 rgba(63,187,158,0.3), 8px 8px 0 rgba(63,187,158,0.15); }
 
   .hero-tagline { font-size: 1rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 0.35rem; font-weight: 700; }
-  .hero-role { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--hot-pink); letter-spacing: 0.08em; margin-bottom: 2rem; line-height: 1.8; }
+  /* Was Press Start 2P at 0.55rem in --hot-pink — failed contrast on lavender bg.
+     Switched to Nunito 1.05rem 900 in --hot-pink-deep (4.5:1 AA) with a thin
+     dark stroke to anchor the letters visually. */
+  .hero-role {
+    font-family: 'Nunito', sans-serif; font-weight: 900;
+    font-size: 1.05rem; color: var(--hot-pink-deep);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 2rem; line-height: 1.5;
+    -webkit-text-stroke: 0.5px var(--pixel-dark);
+    paint-order: stroke fill;
+  }
   .hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; }
 
   .btn {
@@ -282,9 +305,18 @@
   .section-bg-soft { background: radial-gradient(ellipse at 0% 50%, rgba(255,179,217,0.2) 0%, transparent 60%), radial-gradient(ellipse at 100% 50%, rgba(78,205,196,0.2) 0%, transparent 60%), var(--lavender-bg); }
   .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
   .section-badge { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; padding: 0.4rem 0.75rem; background: var(--yellow); border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark); color: var(--pixel-dark); letter-spacing: 0.05em; white-space: nowrap; }
-  .section-title { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--text); flex: 1; line-height: 1.05; letter-spacing: -0.02em; }
+  .section-title {
+    font-family: 'Unbounded', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem); color: var(--text);
+    flex: 1; line-height: 1.05; letter-spacing: -0.02em;
+    /* Stroke for large section headers */
+    -webkit-text-stroke: 1.5px var(--pixel-dark);
+    paint-order: stroke fill;
+  }
   .section-title .accent { color: var(--purple); }
-  .section-title .accent2 { color: var(--hot-pink); }
+  /* Was --hot-pink (#ff2d9b) — ~3.3:1 on light bg, failed AA. Switched to deep
+     variant which clears 4.5:1 AA. The stroke also gives extra visual anchor. */
+  .section-title .accent2 { color: var(--hot-pink-deep); }
 
   /* ===== WORK CARDS ===== */
   .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -333,7 +365,7 @@
   .specimen.coming-soon .specimen-icon { font-size: 1.2rem; opacity: 0.4; }
   .specimen.coming-soon .specimen-name { color: var(--text-light); font-style: italic; font-size: 0.7rem; }
 
-  .specimen-num { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--hot-pink); letter-spacing: 0.1em; align-self: flex-start; margin-top: 0.4rem; }
+  .specimen-num { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--hot-pink-deep); letter-spacing: 0.1em; align-self: flex-start; margin-top: 0.4rem; }
   .specimen-icon { font-size: 2.2rem; flex: 1; display: flex; align-items: center; }
   .specimen-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.78rem; color: var(--text); text-align: center; line-height: 1.3; }
   .specimen-tag { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; }
@@ -358,7 +390,7 @@
   .about-lead .hl { color: var(--purple); }
   .about-lead .hl2 { color: #0e7a5f; }
   .about-body { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 1.25rem; font-weight: 600; }
-  .about-placeholder { display: inline-block; padding: 0.15em 0.5em; background: rgba(255,45,155,0.06); border: 2px dashed var(--pink); border-radius: 4px; color: var(--hot-pink); font-style: italic; }
+  .about-placeholder { display: inline-block; padding: 0.15em 0.5em; background: rgba(255,45,155,0.06); border: 2px dashed var(--pink); border-radius: 4px; color: var(--hot-pink-deep); font-style: italic; }
 
   .contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 3px dashed var(--lavender-mid); }
   .contact-link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--white); border: 3px solid var(--pixel-dark); box-shadow: 3px 3px 0 var(--pixel-dark); border-radius: 6px; font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--purple); text-decoration: none; transition: all 0.12s; }
@@ -368,21 +400,35 @@
   /* ===== CONTACT ===== */
   .contact-pod { background: var(--white); border-radius: 16px; border: 3px solid var(--pixel-dark); box-shadow: 8px 8px 0 var(--pixel-dark); padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden; max-width: 680px; margin: 0 auto; }
   .contact-pod::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 10px; background: repeating-linear-gradient(90deg, var(--pink) 0, var(--pink) 16.66%, var(--yellow) 16.66%, var(--yellow) 33.33%, var(--teal) 33.33%, var(--teal) 50%, var(--purple) 50%, var(--purple) 66.66%, var(--orange) 66.66%, var(--orange) 83.33%, var(--blue) 83.33%, var(--blue) 100%); }
-  .contact-signal { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: #0e7a5f; letter-spacing: 0.12em; display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 1.5rem; }
-  .signal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); }
+  /* Was 0.55rem — too small to read. Bumped to 0.85rem so the pixel font breathes. */
+  .contact-signal { font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #0a5a45; letter-spacing: 0.12em; display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-bottom: 1.75rem; }
+  .signal-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px var(--teal); }
   .contact-headline { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3.5vw, 2.4rem); color: var(--text); line-height: 1.2; margin-bottom: 1.75rem; letter-spacing: -0.02em; }
   .contact-headline .accent { color: var(--purple); }
-  .contact-email { display: inline-flex; align-items: center; gap: 0.6rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: clamp(0.85rem, 1.5vw, 1rem); color: var(--purple); text-decoration: none; padding: 0.85rem 2rem; border-radius: 8px; border: 3px solid var(--pixel-dark); background: var(--lavender-mid); box-shadow: 4px 4px 0 var(--pixel-dark); transition: all 0.12s; margin-bottom: 1.5rem; }
-  .contact-email:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
-  .contact-email:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
-  .contact-sub { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; max-width: 26rem; margin: 0 auto; font-weight: 600; }
+  /* Was purple text on lavender-mid (#A122C0 on #c8a8f0) — ~3.3:1, failed AA.
+     Now white text on purple bg — ~7.7:1, well clear of AAA. */
+  .contact-email {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    color: var(--white); text-decoration: none;
+    padding: 0.95rem 2rem; border-radius: 8px;
+    border: 3px solid var(--pixel-dark); background: var(--purple);
+    box-shadow: 4px 4px 0 var(--pixel-dark); transition: all 0.12s;
+    margin-bottom: 1.5rem;
+  }
+  .contact-email:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); background: var(--hot-pink-deep); color: var(--white); }
+  .contact-email:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--pixel-dark); }
+  /* Was 0.85rem — bumped +4pt-equivalent to ~1.05rem. Also tightened to text-mid
+     (4a1878) for stronger contrast vs the lighter text-light. */
+  .contact-sub { font-size: 1.05rem; color: var(--text-mid); line-height: 1.6; max-width: 30rem; margin: 0 auto; font-weight: 700; }
 
   /* ===== FOOTER ===== */
   footer { background: #A122C0; border-top: 4px solid var(--pixel-dark); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; flex-wrap: wrap; gap: 1rem; }
   .footer-brand { display: flex; align-items: center; gap: 0.6rem; }
   .footer-brand img { height: 28px; filter: drop-shadow(2px 2px 0 var(--pink)); }
   .footer-brand span { font-family: 'Press Start 2P', monospace; font-size: 0.5rem; color: var(--yellow); letter-spacing: 0.08em; line-height: 1.8; }
-  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--yellow); letter-spacing: 0.08em; padding: 0.4rem 0.75rem; border: 2px solid var(--yellow); background: rgba(0,0,0,0.2); transition: all 0.3s; cursor: pointer; border-radius: 4px; }
+  .footer-hits { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--yellow); letter-spacing: 0.08em; padding: 0.4rem 0.75rem; border: 2px solid var(--yellow); background: rgba(0,0,0,0.2); transition: all 0.3s; cursor: pointer; border-radius: 4px; font-weight: normal; }
   .footer-hits:hover, .footer-hits:focus-visible { background: rgba(255,229,102,0.15); border-color: var(--teal); color: var(--teal); }
   .footer-hits:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
   .footer-hits[data-found="true"] { background: rgba(63,187,158,0.2); border-color: var(--teal); color: var(--teal); }
@@ -440,7 +486,7 @@
           <a href="stubhub/" role="menuitem"><span class="dropdown-tag" aria-hidden="true">A11Y</span> StubHub Annotations</a>
         </div>
       </li>
-      <li><a href="playground.html">Playground</a></li>
+      <li><a href="#playground">Playground</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="resume.pdf" class="nav-cv" target="_blank" rel="noopener" aria-label="Download CV (opens in new tab)">CV ↗</a></li>
@@ -516,7 +562,7 @@
   <div class="section-wrap" id="work">
     <div class="section-header">
       <span class="section-badge" aria-hidden="true">01 // FEATURED</span>
-      <h2 class="section-title"><span style="color:#A122C0;">Featured</span> <span class="accent">Work</span></h2>
+      <h2 class="section-title"><span class="accent">Featured</span> <span class="accent">Work</span></h2>
     </div>
     <div class="work-grid">
       <a href="august/" class="work-card">
@@ -583,7 +629,7 @@
       <h2 class="section-title"><span class="accent2">The</span> <span class="accent2">Playground</span></h2>
     </div>
     <p class="artifacts-intro">
-      The real world is just a bigger playground. <em style="color:var(--hot-pink);font-style:normal;font-weight:900;">Scraped knees everywhere.</em><br/>
+      The real world is just a bigger playground. <em style="color:var(--hot-pink-deep);font-style:normal;font-weight:900;">Scraped knees everywhere.</em><br/>
       Here's who got sent to the nurse's office, and how I slapped on a <em style="background:var(--yellow);color:var(--pixel-dark);font-style:normal;font-weight:900;padding:0.1em 0.4em;border-radius:4px;border:2px solid var(--pixel-dark);">band-aid</em>.
     </p>
     <div class="specimen-grid">
@@ -631,7 +677,7 @@
   <div class="section-wrap" id="about">
     <div class="section-header">
       <span class="section-badge" aria-hidden="true">03 // PLAYER PROFILE</span>
-      <h2 class="section-title"><span style="color:#ff2d9b;">About /</span> <span style="color:#ff2d9b;">Résumé</span></h2>
+      <h2 class="section-title"><span class="accent2">About /</span> <span class="accent2">Résumé</span></h2>
     </div>
     <div class="about-grid">
       <div class="about-card">
@@ -690,7 +736,7 @@
     <img src="assets/Ghost_Logo_Tomi_UX.svg" alt="" aria-hidden="true" style="height:28px;width:auto;" />
     <span>© 2026 · STACY TOMASI<br/>TOMIUX · ALL RIGHTS RESERVED</span>
   </div>
-  <div class="footer-hits" tabindex="0" role="button" aria-label="Secret score counter" title="you found it 👻" id="footer-easter-egg">SCORE: <span>∞</span></div>
+  <button class="footer-hits" type="button" aria-label="Secret score counter — activate for a surprise" aria-pressed="false" aria-live="polite" title="you found it 👻" id="footer-easter-egg">SCORE: <span>∞</span></button>
   <div class="footer-links">
     <a href="mailto:hello@tomiux.com">Email</a>
     <a href="https://www.linkedin.com/in/stacytomasi/" target="_blank" rel="noopener" aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
@@ -727,15 +773,15 @@
   });
   document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
 
-  // ===== EASTER EGG — keyboard handler (WCAG 2.1.1) =====
+  // ===== EASTER EGG — native <button> handles Enter/Space via click automatically (WCAG 2.1.1) =====
   const egg = document.getElementById('footer-easter-egg');
   function activateEgg() {
     egg.setAttribute('data-found', 'true');
+    egg.setAttribute('aria-pressed', 'true');
     egg.innerHTML = '<span>🎮 KONAMI CODE ACCEPTED 🎮</span>';
     egg.setAttribute('aria-label', 'Konami code accepted!');
   }
   egg.addEventListener('click', activateEgg);
-  egg.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateEgg(); } });
 
   // ===== SPECIMEN PLACEHOLDER INTERACTION =====
   document.querySelectorAll('.specimen:not(.coming-soon)').forEach(card => {
